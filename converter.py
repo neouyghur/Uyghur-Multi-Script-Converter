@@ -337,6 +337,8 @@ while text:
     #ofile.write("\n")
     text = infile.readline()
 
+
+
 # Closing files
 infile.close()
 outfile.close()
