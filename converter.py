@@ -8,8 +8,9 @@ import os.path
 import sys
 
 
-class UgTextTrans:
+class UgTextConverter:
 
+    # Check if input is Uyghur character
     def IsU(self, herp):
         m = re.search('[\u0621-\u06ff]', herp, re.UNICODE) # re.UNICODE is important
         if m == None:
@@ -17,6 +18,7 @@ class UgTextTrans:
         else:
             return True
 
+    # Check if input is Uyghur punctuation
     def U2LSBelge(self, herp):
         ret = herp
         if herp == u'؟':
@@ -34,7 +36,8 @@ class UgTextTrans:
         else:
             ret = herp.encode('utf-8')
         return ret
-    
+
+    # UAS to CTS
     def U2OTToken(self, text):
         aldiN = False
         skip = True
@@ -43,7 +46,11 @@ class UgTextTrans:
         size = self.str_len(text)
         herp = ''#text[pos]
         while (pos < size):
-            uly += herp
+            # To control unexpected non-unicode characters
+            try:
+                uly += herp
+            except:
+                print herp
             #print uly
             #print pos
             #print 'text: ' + uly
@@ -258,41 +265,78 @@ class UgTextTrans:
             print "not a string"
 
 
-# Test function
-# utt = UgTextTrans()
-# if utt.IsU('ا'):
-#     print 'ok'
-# else:
-#     print 'nok'
 
-idir = 'large_uyghur_text.txt'
-if os.path.exists(idir):
-    ifile = codecs.open(idir, 'r',  encoding='utf-8')
+def test():
+    # Test function
+    # utt = UgTextConverter()
+    # if utt.IsU('ا'):
+    #     print 'ok'
+    # else:
+    #     print 'nok'
+
+    idir = 'large_uyghur_text.txt'
+    if os.path.exists(idir):
+        ifile = codecs.open(idir, 'r',  encoding='utf-8')
+    else:
+        print "Error: Cannot find the file.\n"
+        sys.exit(1)
+
+    ofile = codecs.open('new.text', 'w');
+    # #file = open('uy.text', 'r')
+    text = ifile.readline()
+    utt = UgTextConverter()
+    while text:
+        ofile.write(utt.U2OTToken(text))
+        #ofile.write("\n")
+        text = ifile.readline()
+    ifile.close()
+    ofile.close()
+
+    # #print type(len(text))
+    # #print str(len(text))
+    #
+    # #text = u"ئوسمان"
+    # utt = UgTextConverter()
+    #
+    # # print str
+    # #print 'len:'
+    # #print utt.str_len(text)
+    # #utt.whatisthis(text)
+    # #utt.whatisthis(text.decode('utf-8'))
+    # print utt.str_len(text)
+    # print utt.U2OTToken(text)
+
+
+# Error control
+if len(sys.argv) != 3:
+    print '[Error]: input error'
+    print '[Info] python converter.py <source file>  <target file>'
+    sys.exit()
+
+infile_dir = sys.argv[1] # Input file directory
+outfile_dir = sys.argv[2] # Output file directory
+
+# File control
+if os.path.exists(infile_dir):
+    infile = codecs.open(infile_dir, 'r',  encoding='utf-8')
 else:
     print "Error: Cannot find the file.\n"
     sys.exit(1)
 
-ofile = codecs.open('new.text', 'w');
-# #file = open('uy.text', 'r')
-text = ifile.readline()
-utt = UgTextTrans()
-while text:
-    ofile.write(utt.U2OTToken(text))
-    #ofile.write("\n")
-    text = ifile.readline()
-ifile.close()
-ofile.close()
+outfile = codecs.open(outfile_dir, 'w');
+text = infile.readline()
+utt = UgTextConverter()
 
-# #print type(len(text))
-# #print str(len(text))
-#
-# #text = u"ئوسمان"
-# utt = UgTextTrans()
-#
-# # print str
-# #print 'len:'
-# #print utt.str_len(text)
-# #utt.whatisthis(text)
-# #utt.whatisthis(text.decode('utf-8'))
-# print utt.str_len(text)
-# print utt.U2OTToken(text)
+# Read line by line
+while text:
+    try:
+        outfile.write(utt.U2OTToken(text))
+    except:
+        print '[Error] We have unexpected error at:'
+        print text
+    #ofile.write("\n")
+    text = infile.readline()
+
+# Closing files
+infile.close()
+outfile.close()
