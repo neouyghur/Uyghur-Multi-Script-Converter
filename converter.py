@@ -8,7 +8,7 @@ import os.path
 import sys
 
 
-class UgTextConverter:
+class UgScriptConverter:
 
     # Check if input is Uyghur character
     def IsU(self, herp):
@@ -36,6 +36,81 @@ class UgTextConverter:
         else:
             ret = herp.encode('utf-8')
         return ret
+
+    # UAS to CTS
+    def U2OTToken_concise(self, text):
+        # This group characters have similar properties
+        # uas: uyghur arab yeziqi
+        # cts: birleshken turk yeziqi
+        uas_group1 = [u'ا', u'ە' , u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د' ,u'ر', u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ', u'ل', u'لا', u'م', u'ھ' , u'و', u'ۇ',  u'ۆ', u'ۈ', u'ۋ',  u'ې', u'ى', u'ي']
+        cts_group1 = [ 'a',  'e',   'b',  'p',  't',  'c',  'ç',  'x' , 'd',  'r',  'z',  'j',  's',  'ş',  'f',  'ñ',  'l',  'la',  'm',  'h',  'o',   'u',   'ö',  'ü',  'v',   'é',  'i',  'y']
+        uas_group2 = [u'ق', u'ك']
+        cts_group2 = [  'q', 'k']
+        map1 = dict(zip(uas_group1, cts_group1))
+        map2 = dict(zip(uas_group2, cts_group2))
+        aldiN = False
+        skip = True
+        uly = ''
+        pos = 0
+        size = self.str_len(text)
+        herp = '' #text[pos]
+        while (pos < size):
+            # To control unexpected non-unicode characters
+            try:
+                uly += herp
+            except:
+                print 'Unexpected Character, please check the results!'
+                print herp
+            #print uly
+            #print pos
+            #print 'text: ' + uly
+            herp = text[pos]
+            #print herp
+            pos += 1
+            if herp == u'ئ':
+                aldiN = False
+                if(skip == True):
+                    herp = ''
+                else:
+                    herp = '’'
+                continue
+            elif herp in uas_group1:
+                # todo: we should add dict map here
+                herp = map1[herp]
+                aldiN = False
+                skip = False
+                continue
+            elif herp == u'غ':
+                if(aldiN == True):
+                    herp = '’ğ'
+                else:
+                    herp = 'ğ'
+                aldiN = False # todo: why here is different than 'g'
+                continue
+            elif herp == u'گ':
+                if(aldiN == True):
+                    herp = '’g'
+                else:
+                    herp = 'g'
+                skip = False
+                aldiN = False
+                continue
+            elif herp in uas_group2:
+                herp = map2[herp]
+                skip = False
+                continue
+            elif herp == u'ن':
+                herp = 'n'
+                skip = False
+                aldiN = True
+                continue
+            else:
+                skip = True
+                herp = self.U2LSBelge(herp)
+                aldiN = False
+                continue
+        uly += herp
+        return uly
 
     # UAS to CTS
     def U2OTToken(self, text):
@@ -268,7 +343,7 @@ class UgTextConverter:
 
 def test():
     # Test function
-    # utt = UgTextConverter()
+    # utt = UgScriptConverter()
     # if utt.IsU('ا'):
     #     print 'ok'
     # else:
@@ -284,7 +359,7 @@ def test():
     ofile = codecs.open('new.text', 'w');
     # #file = open('uy.text', 'r')
     text = ifile.readline()
-    utt = UgTextConverter()
+    utt = UgScriptConverter()
     while text:
         ofile.write(utt.U2OTToken(text))
         #ofile.write("\n")
@@ -296,7 +371,7 @@ def test():
     # #print str(len(text))
     #
     # #text = u"ئوسمان"
-    # utt = UgTextConverter()
+    # utt = UgScriptConverter()
     #
     # # print str
     # #print 'len:'
@@ -307,38 +382,38 @@ def test():
     # print utt.U2OTToken(text)
 
 
-# Error control
-if len(sys.argv) != 3:
-    print '[Error]: input error'
-    print '[Info] python converter.py <source file>  <target file>'
-    sys.exit()
-
-infile_dir = sys.argv[1] # Input file directory
-outfile_dir = sys.argv[2] # Output file directory
-
-# File control
-if os.path.exists(infile_dir):
-    infile = codecs.open(infile_dir, 'r',  encoding='utf-8')
-else:
-    print "Error: Cannot find the file.\n"
-    sys.exit(1)
-
-outfile = codecs.open(outfile_dir, 'w');
-text = infile.readline()
-utt = UgTextConverter()
-
-# Read line by line
-while text:
-    try:
-        outfile.write(utt.U2OTToken(text))
-    except:
-        print '[Error] We have unexpected error at:'
-        print text
-    #ofile.write("\n")
-    text = infile.readline()
-
-
-
-# Closing files
-infile.close()
-outfile.close()
+# # Error control
+# if len(sys.argv) != 3:
+#     print '[Error]: input error'
+#     print '[Info] python converter.py <source file>  <target file>'
+#     sys.exit()
+#
+# infile_dir = sys.argv[1] # Input file directory
+# outfile_dir = sys.argv[2] # Output file directory
+#
+# # File control
+# if os.path.exists(infile_dir):
+#     infile = codecs.open(infile_dir, 'r',  encoding='utf-8')
+# else:
+#     print "Error: Cannot find the file.\n"
+#     sys.exit(1)
+#
+# outfile = codecs.open(outfile_dir, 'w');
+# text = infile.readline()
+# utt = UgScriptConverter()
+#
+# # Read line by line
+# while text:
+#     try:
+#         outfile.write(utt.U2OTToken(text))
+#     except:
+#         print '[Error] We have unexpected error at:'
+#         print text
+#     #ofile.write("\n")
+#     text = infile.readline()
+#
+#
+#
+# # Closing files
+# infile.close()
+# outfile.close()
