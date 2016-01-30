@@ -2,4 +2,6 @@
 This converter converts multiple Uyghur scripts scuh as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkick Scritp).   
 
 Functions:
-	UAS to ULS
+	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
+	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
+	
