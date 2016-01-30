@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# kiskarmilar
+# uas: uyghur arab yeziqi
+# cts: birleshken turk yeziqi
+
 import io
 import codecs
 import re
@@ -17,6 +21,79 @@ class UgScriptConverter:
             return False;
         else:
             return True
+
+    # UAS to CLS (uyghur ereptin uyghur latingha almashturush)
+    def UA2LA_concise(self, text):
+        # This group characters have similar properties
+        uas_group1 = [u'ا', u'ە' , u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د' ,u'ر', u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ', u'ل', u'لا', u'م', u'ھ' , u'و', u'ۇ',  u'ۆ', u'ۈ', u'ۋ',  u'ې', u'ى', u'ي']
+        cts_group1 = [ 'a',  'e',   'b',  'p',  't',  'j', 'ch',  'x' , 'd',  'r',  'z', 'zh',  's', 'sh',  'f', 'ng',  'l',  'la',  'm',  'h',  'o',   'u',   'ö',  'ü',  'w',   'é',  'i',  'y']
+        uas_group2 = [u'ق', u'ك']
+        cts_group2 = [  'q', 'k']
+        map1 = dict(zip(uas_group1, cts_group1))
+        map2 = dict(zip(uas_group2, cts_group2))
+        aldiN = False
+        skip = True
+        uly = ''
+        pos = 0
+        size = len(text)
+        herp = '' #text[pos]
+        while (pos < size):
+            # To control unexpected non-unicode characters
+            try:
+                uly += herp
+            except:
+                print 'Unexpected Character, please check the results!'
+                print herp
+            #print uly
+            #print pos
+            #print 'text: ' + uly
+            herp = text[pos]
+            #print herp
+            pos += 1
+            if herp == u'ئ':
+                aldiN = False
+                if(skip == True):
+                    herp = ''
+                else:
+                    herp = '’'
+                continue
+            elif herp in uas_group1:
+                # todo: we should add dict map here
+                herp = map1[herp]
+                aldiN = False
+                skip = False
+                continue
+            elif herp == u'غ':
+                if(aldiN == True):
+                    herp = '’gh'
+                else:
+                    herp = 'gh'
+                aldiN = False # todo: why here is different than 'g'
+                continue
+            elif herp == u'گ':
+                if(aldiN == True):
+                    herp = '’g'
+                else:
+                    herp = 'g'
+                skip = False
+                aldiN = False
+                continue
+            elif herp in uas_group2:
+                herp = map2[herp]
+                skip = False
+                continue
+            elif herp == u'ن':
+                herp = 'n'
+                skip = False
+                aldiN = True
+                continue
+            else:
+                herp = self.U2LSBelge(herp)
+                skip = True
+                aldiN = False
+                continue
+        uly += herp
+        return uly
 
     # Check if input is Uyghur punctuation
     def U2LSBelge(self, herp):
@@ -38,7 +115,7 @@ class UgScriptConverter:
         return ret
 
     # UAS to CTS
-    def UAS2CTS_concise(self, text):
+    def UA2CT_concise(self, text):
         # This group characters have similar properties
         # uas: uyghur arab yeziqi
         # cts: birleshken turk yeziqi
@@ -52,7 +129,7 @@ class UgScriptConverter:
         skip = True
         uly = ''
         pos = 0
-        size = self.str_len(text)
+        size = len(text)
         herp = '' #text[pos]
         while (pos < size):
             # To control unexpected non-unicode characters
@@ -113,12 +190,12 @@ class UgScriptConverter:
         return uly
 
     # UAS to CTS
-    def UAS2CTS(self, text):
+    def UA2CT(self, text):
         aldiN = False
         skip = True
         uly = ''
         pos = 0
-        size = self.str_len(text)
+        size = len(text)
         herp = ''#text[pos]
         while (pos < size):
             # To control unexpected non-unicode characters

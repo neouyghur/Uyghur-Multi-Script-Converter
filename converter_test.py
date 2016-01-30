@@ -4,15 +4,23 @@
 from converter import UgScriptConverter
 
 text =  u'ھەممە ئادەم تۇغۇلۇشىدىنلا ئەركىن، ئىززەت-ھۆرمەت ۋە ھوقۇقتا باب-باراۋەر بولۇپ تۇغۇلغان. ئۇلار ئەقىلگە ۋە ۋىجدانغا ئىگە ھەمدە بىر-بىرىگە قېرىنداشلىق مۇناسىۋىتىگە خاس روھ بىلەن مۇئامىلە قىلىشى كېرەك.'
+latin_text = u"Hemme adem tughulushidinla erkin, izzet-hörmet we hoquqta bab-barawer bolup tughulghan. Ular eqilge we wijdan'gha ige hemde bir-birige qërindashliq munasiwitige xas roh bilen muamile qilishi kërek."
 utt = UgScriptConverter()
 
-out_text1 = utt.U2OTToken(text)
-out_text2 = utt.U2OTToken_concise(text)
+out_text1 = utt.UA2CT(text)
+out_text2 = utt.UA2CT_concise(text)
+out_text3 = utt.UA2LA_concise(text)
 
 print out_text1 == out_text2
 
+print 'common Turkish'
 print out_text1
 print out_text2
+
+print 'latin'
+print latin_text == out_text3
+print latin_text
+print out_text3
 
 
 
