@@ -1,69 +1,69 @@
 # Multiple-Uyghur-Script-Converter
 This converter converts multiple Uyghur scripts scuh as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkish Scritp).   
 
-Functions:
+# Functions:
 	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
 	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
 
 # Sample Input Output Examples (Örnek misallar)
 
-# Input
+### Input
 قول باش پۇت كۆز
-# Output
+### Output
 qol baş put köz
 
-# Input
+### Input
 جەڭچى جۇدې
-# Output
+### Output
 ceñçi cudé
 
-# Input
+### Input
 سان سەي ئې
-# Output
+### Output
 san sey é
 
-# Input
+### Input
 شىر شاڭخەي
-# Output
+### Output
 şir şañxey
 
-# Input
+### Input
 كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر
-# Output
+### Output
 kitab veten tomur  kömür éliktir
 
-# Input
+### Input
 ۋەتەن ۋيېتنام
-# Output
+### Output
 veten vyétnam
 
-# Input
+### Input
 شىنجاڭ
 
-# Output
+### Output
 şincañ
 
-# Input
+### Input
 ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس
 
-# Output
+### Output
 anar encür orda uruş  ördek üzüm élan inkas
 
-# Input
+### Input
 ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي
-# Outup
+### Outup
 inik'ana es'et radi'o mes'ul qari'örük na'ümid  it'éyiq cem'iy
 
-# Input
+### Input
 نەمەنگان ئۆزخان پاسخا بايرىمى
 
-# Output
+### Output
 nemengan özxan pasxa bayrimi
 
 ===========================================================================
 
-# Input
+### Input
 qol baş put köz ceñçi cudé san sey é şir şañxey kitab veten tomur  kömür éliktir veten vyétnam şincañ anar encür orda uruş  ördek üzüm élan inkas inik'ana es'et radi'o mes'ul qari'örük na'ümid  it'éyiq cem'iy nemengan özxan pasxa bayrimi
 
-# Output
+### Output
 قول باش پۇت كۆز جەڭچى جۇدې سان سەي ئې شىر شاڭخەي كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر ۋەتەن ۋيېتنام شىنجاڭ ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي نەمەنگان ئۆزخان پاسخا بايرىمى
