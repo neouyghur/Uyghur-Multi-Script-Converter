@@ -5,6 +5,8 @@ Functions:
 	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
 	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
 
+# Sample Input Output Examples (Örnek misallar)
+
 # Input
 قول باش پۇت كۆز
 # Output
