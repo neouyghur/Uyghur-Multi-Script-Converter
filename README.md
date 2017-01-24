@@ -6,64 +6,36 @@ This converter converts multiple Uyghur scripts scuh as ULS(Uyghur Latin Script)
 	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
 
 # Sample Input Output Examples (Örnek misallar)
+-------- | -------- 
+Input	| 	Output
 
-### Input
-قول باش پۇت كۆز
-### Output
-qol baş put köz
+قول باش پۇت كۆز | qol baş put köz
 
-### Input
-جەڭچى جۇدې
-### Output
-ceñçi cudé
+جەڭچى جۇدې		|	ceñçi cudé
 
-### Input
-سان سەي ئې
-### Output
-san sey é
 
-### Input
-شىر شاڭخەي
-### Output
-şir şañxey
+سان سەي ئې | san sey é
 
-### Input
-كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر
-### Output
-kitab veten tomur  kömür éliktir
 
-### Input
-ۋەتەن ۋيېتنام
-### Output
-veten vyétnam
+شىر شاڭخەي | şir şañxey
 
-### Input
-شىنجاڭ
 
-### Output
-şincañ
+كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر | kitab veten tomur  kömür éliktir
 
-### Input
-ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس
 
-### Output
-anar encür orda uruş  ördek üzüm élan inkas
+ۋەتەن ۋيېتنام | veten vyétnam
 
-### Input
-ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي
-### Outup
-inik'ana es'et radi'o mes'ul qari'örük na'ümid  it'éyiq cem'iy
 
-### Input
-نەمەنگان ئۆزخان پاسخا بايرىمى
+شىنجاڭ | şincañ
 
-### Output
-nemengan özxan pasxa bayrimi
 
-===========================================================================
+ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس | anar encür orda uruş  ördek üzüm élan inkas
 
-### Input
-qol baş put köz ceñçi cudé san sey é şir şañxey kitab veten tomur  kömür éliktir veten vyétnam şincañ anar encür orda uruş  ördek üzüm élan inkas inik'ana es'et radi'o mes'ul qari'örük na'ümid  it'éyiq cem'iy nemengan özxan pasxa bayrimi
 
-### Output
-قول باش پۇت كۆز جەڭچى جۇدې سان سەي ئې شىر شاڭخەي كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر ۋەتەن ۋيېتنام شىنجاڭ ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي نەمەنگان ئۆزخان پاسخا بايرىمى
+ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي inik'ana es'et radi'o mes'ul qari'örük na'ümid  it'éyiq cem'iy
+
+
+نەمەنگان ئۆزخان پاسخا بايرىمى |  nemengan özxan pasxa bayrimi
+
+
+qol baş put köz ceñçi cudé san sey é şir şañxey kitab veten tomur  kömür éliktir veten vyétnam şincañ anar encür orda uruş  ördek üzüm élan inkas inik'ana es'et radi'o mes'ul qari'örük na'ümid  it'éyiq cem'iy nemengan özxan pasxa bayrimi | قول باش پۇت كۆز جەڭچى جۇدې سان سەي ئې شىر شاڭخەي كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر ۋەتەن ۋيېتنام شىنجاڭ ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي نەمەنگان ئۆزخان پاسخا بايرىمى
