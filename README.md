@@ -9,15 +9,9 @@ This converter converts multiple Uyghur scripts scuh as ULS(Uyghur Latin Script)
 
 Input	| 	Output
 -------- | -------- 
-
 قول باش پۇت كۆز | qol baş put köz
-
 جەڭچى جۇدې		|	ceñçi cudé
-
-
 سان سەي ئې | san sey é
-
-
 شىر شاڭخەي | şir şañxey
 
 
