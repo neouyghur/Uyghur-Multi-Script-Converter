@@ -25,5 +25,12 @@ qol baş put köz ceñçi cudé san sey é şir şañxey kitab veten tomur  köm
 
 Pyqt is used for user iterface. umsc.ui is graphic file which could be open by clicking on it.
 	
-        pyuic4 -x umsc.ui -o mainWindow.py (converting the ui file to python file)
+        pyuic4 -x mainWindow.ui -o mainWindow.py (converting the ui file to python file)
 	python umsc.py (run the gui program)
+
+# Files
+name | info
+-----|----
+mainWindow.ui | pyqt user infterface
+converter.py | functions for converting
+umsc.py | main fuction for running the program which includes mainWindow.py and converter.py 
