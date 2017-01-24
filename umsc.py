@@ -1,186 +1,163 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'umsc.ui'
-#
-# Created by: PyQt4 UI code generator 4.11.4
-#
-# WARNING! All changes made in this file will be lost!
+"""
+ZetCode PyQt4 tutorial 
 
-from PyQt4 import QtCore, QtGui
+In this example, we create a simple
+window in PyQt4.
 
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
+author: Jan Bodnar
+website: zetcode.com 
+last edited: October 2011
+"""
 
-try:
-    _encoding = QtGui.QApplication.UnicodeUTF8
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig, _encoding)
-except AttributeError:
-    def _translate(context, text, disambig):
-        return QtGui.QApplication.translate(context, text, disambig)
+import sys
+from PyQt4 import QtGui
+from PyQt4 import QtCore
+from mainWindow import Ui_MainWindow
+from converter import UgScriptConverter
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(586, 647)
-        self.centralwidget = QtGui.QWidget(MainWindow)
-        self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.line_2 = QtGui.QFrame(self.centralwidget)
-        self.line_2.setFrameShape(QtGui.QFrame.HLine)
-        self.line_2.setFrameShadow(QtGui.QFrame.Sunken)
-        self.line_2.setObjectName(_fromUtf8("line_2"))
-        self.verticalLayout.addWidget(self.line_2)
-        self.horizontalLayout_2 = QtGui.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem)
-        self.label_3 = QtGui.QLabel(self.centralwidget)
-        self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.horizontalLayout_2.addWidget(self.label_3)
-        self.cb_src = QtGui.QComboBox(self.centralwidget)
-        self.cb_src.setObjectName(_fromUtf8("cb_src"))
-        self.cb_src.addItem(_fromUtf8(""))
-        self.cb_src.addItem(_fromUtf8(""))
-        self.cb_src.addItem(_fromUtf8(""))
-        self.horizontalLayout_2.addWidget(self.cb_src)
-        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem1)
-        self.label_4 = QtGui.QLabel(self.centralwidget)
-        self.label_4.setObjectName(_fromUtf8("label_4"))
-        self.horizontalLayout_2.addWidget(self.label_4)
-        self.cb_opt = QtGui.QComboBox(self.centralwidget)
-        self.cb_opt.setObjectName(_fromUtf8("cb_opt"))
-        self.cb_opt.addItem(_fromUtf8(""))
-        self.cb_opt.addItem(_fromUtf8(""))
-        self.cb_opt.addItem(_fromUtf8(""))
-        self.horizontalLayout_2.addWidget(self.cb_opt)
-        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem2)
-        self.horizontalLayout_3 = QtGui.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
-        self.horizontalLayout_2.addLayout(self.horizontalLayout_3)
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
-        self.line = QtGui.QFrame(self.centralwidget)
-        self.line.setFrameShape(QtGui.QFrame.HLine)
-        self.line.setFrameShadow(QtGui.QFrame.Sunken)
-        self.line.setObjectName(_fromUtf8("line"))
-        self.verticalLayout.addWidget(self.line)
-        self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.verticalLayout.addLayout(self.horizontalLayout)
-        spacerItem3 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.verticalLayout.addItem(spacerItem3)
-        self.label = QtGui.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setObjectName(_fromUtf8("label"))
-        self.verticalLayout.addWidget(self.label)
-        self.te_src = QtGui.QTextEdit(self.centralwidget)
-        self.te_src.setObjectName(_fromUtf8("te_src"))
-        self.verticalLayout.addWidget(self.te_src)
-        spacerItem4 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.verticalLayout.addItem(spacerItem4)
-        self.line_3 = QtGui.QFrame(self.centralwidget)
-        self.line_3.setFrameShape(QtGui.QFrame.HLine)
-        self.line_3.setFrameShadow(QtGui.QFrame.Sunken)
-        self.line_3.setObjectName(_fromUtf8("line_3"))
-        self.verticalLayout.addWidget(self.line_3)
-        self.label_2 = QtGui.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.verticalLayout.addWidget(self.label_2)
-        self.te_opt = QtGui.QTextEdit(self.centralwidget)
-        self.te_opt.setObjectName(_fromUtf8("te_opt"))
-        self.verticalLayout.addWidget(self.te_opt)
-        spacerItem5 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.verticalLayout.addItem(spacerItem5)
-        self.line_4 = QtGui.QFrame(self.centralwidget)
-        self.line_4.setFrameShape(QtGui.QFrame.HLine)
-        self.line_4.setFrameShadow(QtGui.QFrame.Sunken)
-        self.line_4.setObjectName(_fromUtf8("line_4"))
-        self.verticalLayout.addWidget(self.line_4)
-        self.btnConvert = QtGui.QPushButton(self.centralwidget)
-        self.btnConvert.setObjectName(_fromUtf8("btnConvert"))
-        self.verticalLayout.addWidget(self.btnConvert)
-        self.btnDefault = QtGui.QPushButton(self.centralwidget)
-        self.btnDefault.setObjectName(_fromUtf8("btnDefault"))
-        self.verticalLayout.addWidget(self.btnDefault)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtGui.QStatusBar(MainWindow)
-        self.statusbar.setObjectName(_fromUtf8("statusbar"))
-        MainWindow.setStatusBar(self.statusbar)
-        self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 586, 22))
-        self.menubar.setObjectName(_fromUtf8("menubar"))
-        self.menuFile = QtGui.QMenu(self.menubar)
-        self.menuFile.setObjectName(_fromUtf8("menuFile"))
-        self.menuHelp = QtGui.QMenu(self.menubar)
-        self.menuHelp.setObjectName(_fromUtf8("menuHelp"))
-        MainWindow.setMenuBar(self.menubar)
-        self.actionInput_File = QtGui.QAction(MainWindow)
-        self.actionInput_File.setObjectName(_fromUtf8("actionInput_File"))
-        self.actionOutput_File = QtGui.QAction(MainWindow)
-        self.actionOutput_File.setObjectName(_fromUtf8("actionOutput_File"))
-        self.actionClose = QtGui.QAction(MainWindow)
-        self.actionClose.setObjectName(_fromUtf8("actionClose"))
-        self.menuFile.addAction(self.actionInput_File)
-        self.menuFile.addAction(self.actionOutput_File)
-        self.menuFile.addAction(self.actionClose)
-        self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuHelp.menuAction())
+class Main(QtGui.QMainWindow):
+	input_file = '' # Menbe hujjiti
+	output_file = '' # Nishah hujjiti
+	isSetFile = False # Ensure the input file is selected
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+	def __init__(self):
+		QtGui.QMainWindow.__init__(self)
+		self.ui = Ui_MainWindow()
+		self.ui.setupUi(self)
+		self.ui.btnConvert.clicked.connect(self.btnConvert_clicked)
+		self.ui.btnDefault.clicked.connect(self.btnDefault_clicked)
+		self.ui.actionInput_File.triggered.connect(self.selectInputFile)
+		self.ui.actionOutput_File.triggered.connect(self.setOutputFile)
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "Uyghur Multi-Script Convertor", None))
-        self.label_3.setText(_translate("MainWindow", "Source/مەنبە", None))
-        self.cb_src.setItemText(0, _translate("MainWindow", "ئۇيغۇرچە", None))
-        self.cb_src.setItemText(1, _translate("MainWindow", "Latin", None))
-        self.cb_src.setItemText(2, _translate("MainWindow", "Ortaq Türkçe", None))
-        self.label_4.setText(_translate("MainWindow", "Output/نىشان", None))
-        self.cb_opt.setItemText(0, _translate("MainWindow", "ئۇيغۇرچە", None))
-        self.cb_opt.setItemText(1, _translate("MainWindow", "Latin", None))
-        self.cb_opt.setItemText(2, _translate("MainWindow", "Ortaq Turkçe", None))
-        self.label.setText(_translate("MainWindow", "Source/مەنبە", None))
-        self.te_src.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.SF NS Text\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"right\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Ubuntu\'; font-size:11pt;\"><br /></p></body></html>", None))
-        self.label_2.setText(_translate("MainWindow", "Output/نىشان", None))
-        self.te_opt.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'.SF NS Text\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Ubuntu\'; font-size:11pt;\"><br /></p></body></html>", None))
-        self.btnConvert.setText(_translate("MainWindow", "Convert/ئايلاندۇرۇش", None))
-        self.btnDefault.setText(_translate("MainWindow", "Default", None))
-        self.menuFile.setTitle(_translate("MainWindow", "File", None))
-        self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
-        self.actionInput_File.setText(_translate("MainWindow", "Input File", None))
-        self.actionOutput_File.setText(_translate("MainWindow", "Output File", None))
-        self.actionClose.setText(_translate("MainWindow", "Close", None))
+	def btnConvert_clicked(self):
+		
+		if self.isSetFile == False:
+			src_txt =  unicode (self.ui.te_src.toPlainText().toUtf8(), "utf-8")
+			opt_txt =  unicode (self.ui.te_opt.toPlainText().toUtf8(), "utf-8")
+		else:
+			# This part should change to status bar
+			msgBox = QtGui.QMessageBox()
+ 			msgBox.setText("Converting the source file. \n Menbe hujitini aylandurwatimiz.")
+ 			msgBox.exec_()
+ 			inf = open(self.input_file, 'r')
+ 			src_txt = unicode (inf.read(), "utf-8")
+ 			inf.close()
+
+		from_val =  self.ui.cb_src.currentIndex()
+		to_val =  self.ui.cb_opt.currentIndex()
+
+		usc = UgScriptConverter()
+
+		# 0 Uyghur, 1 Latin, 2 Common Turkish
+		if from_val == to_val:
+			opt_txt = src_txt
+		elif from_val == 0: 
+			if to_val == 1:
+				# Uyghur to Latin
+				opt_txt = usc.UA2LT(src_txt)
+			elif to_val == 2:
+				# Uyghur to Common Turkish
+				opt_txt = usc.UA2CT(src_txt)
+		elif from_val == 1: 
+			if to_val == 0:
+				# Latin to Uyghur
+				opt_txt = usc.LA2UA(src_txt)
+			elif to_val == 2:
+				# Latin to Common Turkish
+				opt_txt = usc.LA2CT(src_txt)
+		elif from_val == 2:
+			if to_val == 0:
+				# Common Turkish to Uyghur
+				opt_txt = usc.CT2UA(src_txt)
+			elif to_val == 1:
+				# Common Turkish to Latin
+				opt_txt = usc.CT2LA(src_txt)
 
 
-if __name__ == "__main__":
-    import sys
+		if self.isSetFile == False:
+			self.ui.te_opt.setText(opt_txt)
+		else:
+			of = open(self.output_file, 'w')
+			of.write(opt_txt.encode('utf8'))
+			of.close()
+
+		isSetFile = False
+		# print from_val
+		# print to_val
+
+		# text = u"ھەممە ئادەم تۇغۇلۇشىدىنلا ئەركىن، ئىززەت-ھۆرمەت ۋە ھوقۇقتا باب-باراۋەر بولۇپ تۇغۇلغان."+\
+		# u' ئۇلار ئەقىلگە ۋە ۋىجدانغا ئىگە ھەمدە بىر-بىرىگە قېرىنداشلىق مۇناسىۋىتىگە'+\
+		# u" خاس روھ بىلەن مۇئامىلە قىلىشى كېرەك."
+		
+		# latin_text = u"Hemme adem tughulushidinla erkin, izzet-hörmet we hoquqta bab-barawer "+\
+		# u"bolup tughulghan. Ular eqilge we wijdan'gha ige hemde bir-birige qérindashliq munasiwitige "+\
+		# u"xas roh bilen muamile qilishi kérek."
+
+		# ct_text = u"Hemme adem tuğuluşidinla erkin, izzet-hörmet ve hoquqta bab-baraver bolup tuğulğan."+\
+		# u" Ular eqilge ve vijdanğa ige hemde bir-birige qérindaşliq munasivitige xas roh bilen mu'amile qilişi kérek. ? <<>>"
+
+		# # latin_text = "adem adem"
+		# self.ui.te_src.setText(ct_text)
+		# usc = UgScriptConverter()
+
+		# # ug_text = usc.CT2UA(ct_text)
+		# # self.ui.textEdit_2.setText(ug_text)
+
+		# # sys.exit()
+
+		# ug_text = usc.LA2UA(latin_text)
+		# self.ui.te_opt.setText(ug_text)
+
+		# ct_text= usc.LA2CT(latin_text)
+		# self.ui.te_opt.setText(ct_text)
+
+	# This function for testing
+	def btnDefault_clicked(self):
+		
+		ug_text = u"چەتئەل"
+
+		from_val =  self.ui.cb_src.currentIndex()
+
+		if from_val == 0:
+			self.ui.te_src.setText(ug_text)
+		elif from_val == 1:
+			pass
+		elif from_val == 1:
+			pass
+		elif from_val == 1:
+			pass
+		elif from_val == 1:
+			pass
+		else:
+			pass
+
+	def selectFile(self):
+		tmp_file = (QtGui.QFileDialog.getOpenFileName())
+		return tmp_file
+
+	def selectInputFile(self):
+		self.input_file = self.selectFile()
+		self.output_file = self.input_file + '_convert.txt'
+		# print 'input', self.input_file
+		# print 'output', self.output_file
+		self.isSetFile = True
+
+	def setOutputFile(self):
+		if self.isSetFile == False:
+			 msgBox = QtGui.QMessageBox()
+ 			 msgBox.setText("Please choose the source file. \n Menbe hujitini tallang.")
+ 			 msgBox.exec_()
+ 			 return
+		self.output_file = self.selectFile()
+		# print 'input', self.input_file
+		# print 'output', self.output_file
+		
+
+if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    MainWindow = QtGui.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    window = Main()
+    window.show()
     sys.exit(app.exec_())
-
