@@ -1,11 +1,11 @@
 # Multiple-Uyghur-Script-Converter
 This converter converts multiple Uyghur scripts scuh as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkish Scritp).   
 
-# Functions:
+# Functions
 	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
 	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
 
-# Sample Input Output Examples (Örnek misallar)
+# Sample input output oxamples (örnek misallar)
 
 Input	| 	Output
 -------- | -------- 
@@ -21,9 +21,18 @@ Input	| 	Output
 نەمەنگان ئۆزخان پاسخا بايرىمى |  nemengan özxan pasxa bayrimi
 qol baş put köz ceñçi cudé san sey é şir şañxey kitab veten tomur  kömür éliktir veten vyétnam şincañ anar encür orda uruş  ördek üzüm élan inkas inik'ana es'et radi'o mes'ul qari'örük na'ümid  it'éyiq cem'iy nemengan özxan pasxa bayrimi | قول باش پۇت كۆز جەڭچى جۇدې سان سەي ئې شىر شاڭخەي كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر ۋەتەن ۋيېتنام شىنجاڭ ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي نەمەنگان ئۆزخان پاسخا بايرىمى
 
-# User interface:
+# User interface
 
 Pyqt is used for user iterface. umsc.ui is graphic file which could be open by clicking on it.
 	
-	pyuic4 -x umsc.ui -o umsc.py (converting the ui file to python file)
-	python umsc.py (run the gui program)
+        pyuic4 -x mainWindow.ui -o mainWindow.py (converting the ui file to python file)
+        python umsc.py (run the gui program)
+
+# Files
+name | info
+-----|----
+mainWindow.ui | pyqt user infterface
+converter.py | functions for converting
+umsc.py | main fuction for running the program which includes mainWindow.py and converter.py 
+materials | official materials for uyghur script converter
+php_code  | this python code is improved version of the php code which is written by Mr. Gheyret Kenji.
