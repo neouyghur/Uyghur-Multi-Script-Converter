@@ -5,7 +5,7 @@ This converter converts multiple Uyghur scripts scuh as ULS(Uyghur Latin Script)
 	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
 	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
 
-# Sample Input Output Examples (Örnek misallar)
+# Sample input output oxamples (örnek misallar)
 
 Input	| 	Output
 -------- | -------- 
