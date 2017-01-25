@@ -16,7 +16,6 @@ import os.path
 import sys
 
 class UgScriptConverter:
-
     # Check if input is Uyghur character
     # Uyghurchimu emesmu
     def isU(self, herp):
@@ -31,10 +30,19 @@ class UgScriptConverter:
         # This group characters have similar properties
         # uas: uyghur arab yeziqi
         # cts: birleshken turk yeziqi
+
         uas_group1 = [u'ا', u'ە', u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د', u'ر', u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ', u'ل',\
-         u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن', u'غ', u'ئ']
+         u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن', u'غ', u'ئ', u'،', u'؛',\
+         u'٭']
+         # following may be not necessary
+         #, u'“', u'„', u'&#8220;', u'&#8222;', u'”', u'‟', u'&#8221;', u'&#8223;']
+
         cts_group1 = [u'a', u'e',  u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ', u'l',\
-         u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ', u"'"]
+         u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ', u"'", u',', u';',\
+         u'*']
+         # following may be not necessary
+         #, u'«', u'«', u'«', u'«', u'»', u'»', u'»', u'»']
+
         map1 = dict(zip(uas_group1, cts_group1))
         change = True # For control EMZE, u'ئ'
         uly = herp = '' #text[pos]
@@ -50,15 +58,18 @@ class UgScriptConverter:
             herp = text[pos]
             #print herp
             pos += 1 # go to next position
-            if herp in uas_group1:
-                # todo: we should add dict map here
-                herp = map1[herp]
-                if herp == u"'" and change == True:
+            check = herp
+            herp = map1.get(herp, herp)
+            if herp == u"'":
+                if change == True:
                     herp = ""
                 change = False
-            else:
-                herp = self.U2LSBelge(herp)
+
+            if check == herp:
                 change = True
+            else:
+                change = False
+
         uly += herp
         return uly
 
@@ -67,9 +78,15 @@ class UgScriptConverter:
         # This group characters have similar properties
         text = text.lower()
         uas_group1 = [u'ا', u'ە', u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د', u'ر', u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ', u'ل',\
-         u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن', u'غ', u'ئ']
+         u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن', u'غ', u'ئ', u'؟', u'،', u'؛',\
+         u'٭']
+         #, u'“',  u'”']
+
         cts_group1 = [u'a', u'e',  u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ', u'l',\
-         u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ', u"'"]
+         u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ', u"'", u'?', u',', u';',\
+         u'*']
+         #, u'«', u'»']
+
         map1 = dict(zip(cts_group1, uas_group1))
         uly = ''
         pos = 0
@@ -84,10 +101,7 @@ class UgScriptConverter:
                 print herp
             herp = text[pos]
             pos += 1
-            if herp in cts_group1:
-                herp = map1[herp]
-            else:
-                herp = self.LS2UBelge(herp)
+            herp = map1.get(herp, herp)
 
         uly += herp
         uly = self.revise_UAS(uly)
@@ -116,7 +130,7 @@ class UgScriptConverter:
         text = text.replace(u'@', u'c')
 
         return text
-    
+
 
     def LA2CT(self, text):
         # ch ç # zh j # sh ş # gh ğ
@@ -147,27 +161,7 @@ class UgScriptConverter:
         text = text.replace(u' ۆ', u' ئۆ')
         text = text.replace(u' ۈ', u' ئۈ')
 
-        return text 
-
-
-    # Uyghur punctuation to Latin punctuation
-    def U2LSBelge(self, herp):
-        ret = herp
-        if herp == u'؟':
-            ret = u'?'
-        elif herp == u'،':
-            ret = u','
-        elif herp == u'؛':
-            ret = u';'
-        elif herp == u'٭':
-            ret = u'*'
-        elif herp == u'“' or herp == u'„' or herp == u'&#8220;' or herp == u'&#8222;':
-            ret = u'«'
-        elif herp == u'”' or herp == u'‟' or herp == u'&#8221;' or herp == u'&#8223;':
-            ret = u'»'
-        else:
-            ret = herp.encode('utf-8')
-        return ret
+        return text
 
     # Latin punctuation to Uyghur punctuation
     def LS2UBelge(self, herp):

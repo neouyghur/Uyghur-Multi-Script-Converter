@@ -1,16 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-ZetCode PyQt4 tutorial 
-
-In this example, we create a simple
-window in PyQt4.
-
-author: Jan Bodnar
-website: zetcode.com 
-last edited: October 2011
-"""
+# Author: neouyghur
+# Mail: osmanjan.t@gmail.com
+# Licence: MIT License
 
 import sys
 from PyQt4 import QtGui
@@ -33,7 +26,6 @@ class Main(QtGui.QMainWindow):
 		self.ui.actionOutput_File.triggered.connect(self.setOutputFile)
 
 	def btnConvert_clicked(self):
-		
 		if self.isSetFile == False:
 			src_txt =  unicode (self.ui.te_src.toPlainText().toUtf8(), "utf-8")
 			opt_txt =  unicode (self.ui.te_opt.toPlainText().toUtf8(), "utf-8")
@@ -54,14 +46,14 @@ class Main(QtGui.QMainWindow):
 		# 0 Uyghur, 1 Latin, 2 Common Turkish
 		if from_val == to_val:
 			opt_txt = src_txt
-		elif from_val == 0: 
+		elif from_val == 0:
 			if to_val == 1:
 				# Uyghur to Latin
-				opt_txt = usc.UA2LT(src_txt)
+				opt_txt = usc.UA2LA(src_txt)
 			elif to_val == 2:
 				# Uyghur to Common Turkish
 				opt_txt = usc.UA2CT(src_txt)
-		elif from_val == 1: 
+		elif from_val == 1:
 			if to_val == 0:
 				# Latin to Uyghur
 				opt_txt = usc.LA2UA(src_txt)
@@ -76,7 +68,6 @@ class Main(QtGui.QMainWindow):
 				# Common Turkish to Latin
 				opt_txt = usc.CT2LA(src_txt)
 
-
 		if self.isSetFile == False:
 			self.ui.te_opt.setText(opt_txt)
 		else:
@@ -85,13 +76,15 @@ class Main(QtGui.QMainWindow):
 			of.close()
 
 		isSetFile = False
+
+		print "Converting is done."
 		# print from_val
 		# print to_val
 
 		# text = u"ھەممە ئادەم تۇغۇلۇشىدىنلا ئەركىن، ئىززەت-ھۆرمەت ۋە ھوقۇقتا باب-باراۋەر بولۇپ تۇغۇلغان."+\
 		# u' ئۇلار ئەقىلگە ۋە ۋىجدانغا ئىگە ھەمدە بىر-بىرىگە قېرىنداشلىق مۇناسىۋىتىگە'+\
 		# u" خاس روھ بىلەن مۇئامىلە قىلىشى كېرەك."
-		
+
 		# latin_text = u"Hemme adem tughulushidinla erkin, izzet-hörmet we hoquqta bab-barawer "+\
 		# u"bolup tughulghan. Ular eqilge we wijdan'gha ige hemde bir-birige qérindashliq munasiwitige "+\
 		# u"xas roh bilen muamile qilishi kérek."
@@ -116,8 +109,10 @@ class Main(QtGui.QMainWindow):
 
 	# This function for testing
 	def btnDefault_clicked(self):
-		
-		ug_text = u"چەتئەل"
+
+		inf = open('default.txt', 'r')
+		ug_text = unicode (inf.read(), "utf-8")
+		inf.close()
 
 		from_val =  self.ui.cb_src.currentIndex()
 
@@ -141,8 +136,9 @@ class Main(QtGui.QMainWindow):
 	def selectInputFile(self):
 		self.input_file = self.selectFile()
 		self.output_file = self.input_file + '_convert.txt'
-		# print 'input', self.input_file
-		# print 'output', self.output_file
+		print "Input file is selected."
+		print 'Input: ', self.input_file
+		print 'Output: ', self.output_file
 		self.isSetFile = True
 
 	def setOutputFile(self):
@@ -152,9 +148,9 @@ class Main(QtGui.QMainWindow):
  			 msgBox.exec_()
  			 return
 		self.output_file = self.selectFile()
-		# print 'input', self.input_file
-		# print 'output', self.output_file
-		
+		print 'Input: ', self.input_file
+		print 'Output: ', self.output_file
+
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
