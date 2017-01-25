@@ -1,14 +1,14 @@
 # Multiple-Uyghur-Script-Converter
-This converter converts multiple Uyghur scripts scuh as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkish Scritp).   
+This converter converts multiple Uyghur scripts such as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkish Script).   
 
 # Functions
 	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
 	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
 
-# Sample input output oxamples (örnek misallar)
+# Sample input output examples (örnek misallar CMT)
 
 Input	| 	Output
--------- | -------- 
+-------- | --------
 قول باش پۇت كۆز | qol baş put köz
 جەڭچى جۇدې		|	ceñçi cudé
 سان سەي ئې | san sey é
@@ -23,16 +23,16 @@ qol baş put köz ceñçi cudé san sey é şir şañxey kitab veten tomur  köm
 
 # User interface
 
-Pyqt is used for user iterface. umsc.ui is graphic file which could be open by clicking on it.
-	
+Pyqt is used for user interface. mainWindow.ui is graphic file which could be open by clicking on it.
+
         pyuic4 -x mainWindow.ui -o mainWindow.py (converting the ui file to python file)
         python umsc.py (run the gui program)
 
 # Files
 name | info
 -----|----
-mainWindow.ui | pyqt user infterface
+mainWindow.ui | pyqt user interface
 converter.py | functions for converting
-umsc.py | main fuction for running the program which includes mainWindow.py and converter.py 
+umsc.py | main function for running the program which includes mainWindow.py and converter.py
 materials | official materials for uyghur script converter
 php_code  | this python code is improved version of the php code which is written by Mr. Gheyret Kenji.
