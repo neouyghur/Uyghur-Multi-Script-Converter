@@ -37,6 +37,3 @@ umsc.py | main function for running the program which includes mainWindow.py and
 materials | official materials for uyghur script converter
 php_code  | this python code is improved version of the php code which is written by Mr. Gheyret Kenji.
 
-
-# Todo
-import-éksport ئىمپورت-ېكسپورت
