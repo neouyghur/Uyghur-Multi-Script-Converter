@@ -32,26 +32,26 @@ class UgScriptConverter:
         # cts: birleshken turk yeziqi
 
         uas_group1 = [u'ا', u'ە', u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د', u'ر', u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ', u'ل',\
-         u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن', u'غ', u'ئ', u'،', u'؛',\
+         u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن', u'غ', u'ئ', u'؟', u'،', u'؛',\
          u'٭']
          # following may be not necessary
          #, u'“', u'„', u'&#8220;', u'&#8222;', u'”', u'‟', u'&#8221;', u'&#8223;']
 
         cts_group1 = [u'a', u'e',  u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ', u'l',\
-         u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ', u"'", u',', u';',\
+         u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ', u"'", u'?', u',', u';',\
          u'*']
          # following may be not necessary
          #, u'«', u'«', u'«', u'«', u'»', u'»', u'»', u'»']
 
         map1 = dict(zip(uas_group1, cts_group1))
         change = True # For control EMZE, u'ئ'
-        uly = herp = '' #text[pos]
+        output = herp = '' #text[pos]
         pos = 0
         size = len(text)
         while (pos < size):
             # To control unexpected non-unicode characters
             try:
-                uly += herp
+                output += herp
             except:
                 print 'Unexpected Character, please check the results!'
                 print herp
@@ -70,8 +70,8 @@ class UgScriptConverter:
             else:
                 change = False
 
-        uly += herp
-        return uly
+        output += herp
+        return output
 
     # Todo: change these codes
     def CT2UA(self, text):
@@ -88,14 +88,14 @@ class UgScriptConverter:
          #, u'«', u'»']
 
         map1 = dict(zip(cts_group1, uas_group1))
-        uly = ''
+        output = ''
         pos = 0
         size = len(text)
         herp = '' #text[pos]
         while (pos < size):
             # To control unexpected non-unicode characters
             try:
-                uly += herp
+                output += herp
             except:
                 print 'Unexpected Character, please check the results!'
                 print herp
@@ -103,9 +103,9 @@ class UgScriptConverter:
             pos += 1
             herp = map1.get(herp, herp)
 
-        uly += herp
-        uly = self.revise_UAS(uly)
-        return uly
+        output += herp
+        output = self.revise_UAS(output)
+        return output
 
     def LA2UA(self, text):
         return self.CT2UA(self.LA2CT(text))
@@ -118,7 +118,7 @@ class UgScriptConverter:
 
         text = text.replace(u'ng', u"n'g")
         text = text.replace(u'ñ', u"ng")
-        text = text.replace(u'ç', u'@h')
+        text = text.replace(u'ç', u'@h') # don't modify the the @ sign
         text = text.replace(u'j', u'zh')
         text = text.replace(u'ş', u'sh')
         text = text.replace(u"ğ", u'gh')
@@ -149,42 +149,57 @@ class UgScriptConverter:
 
         return text
 
+    def CC2CT(self, text):
+        cts_group1 = [u'a', u'e', u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ', u'l',\
+         u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ']
 
-    def revise_UAS(self, text):
-
-        text = text.replace(u' ا', u' ئا')
-        text = text.replace(u' ە', u' ئە')
-        text = text.replace(u' ې', u' ئې')
-        text = text.replace(u' ى', u' ئى')
-        text = text.replace(u' و', u' ئو')
-        text = text.replace(u' ۇ', u' ئۇ')
-        text = text.replace(u' ۆ', u' ئۆ')
-        text = text.replace(u' ۈ', u' ئۈ')
+        ccs_group1 = [u'а', u'ә', u'б', u'п', u'т', u'җ', u'ч', u'х', u'д', u'р', u'з', u'ж', u'с', u'ш', u'ф', u'ң', u'л',\
+         u'ла', u'м', u'һ', u'о', u'у', u'ө', u'ү', u'в', u'е', u'и', u'й', u'қ', u'к', u'г', u'н', u'ғ']
+        
+        for i, j in zip(cts_group1, ccs_group1):
+            text = text.replace(j, i)
 
         return text
 
-    # Latin punctuation to Uyghur punctuation
-    def LS2UBelge(self, herp):
-        ret = herp
-        if herp == u'?':
-            ret = u'؟'
-        elif herp == u',':
-            ret = u'،'
-        elif herp == u';':
-            ret = u'؛'
-        elif herp == u'*':
-            ret = u'٭'
-        # if herp == u'“' or herp == u'„' or herp == u'&#8220;' or herp == u'&#8222;':
-        #     ret = u'«'
-        # if herp == u'”' or herp == u'‟' or herp == u'&#8221;' or herp == u'&#8223;':
-        #     ret = u'»'
-        elif herp == u'“«':
-            ret = u'“'
-        elif herp == u'”»':
-            ret = u'”'
-        else:
-            ret = herp.encode('utf-8')
-        return ret
+    def CC2CT(self, text):
+        cts_group1 = [u'a', u'e', u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ', u'l',\
+         u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ']
+
+        ccs_group1 = [u'а', u'ә', u'б', u'п', u'т', u'җ', u'ч', u'х', u'д', u'р', u'з', u'ж', u'с', u'ш', u'ф', u'ң', u'л',\
+         u'ла', u'м', u'һ', u'о', u'у', u'ө', u'ү', u'в', u'е', u'и', u'й', u'қ', u'к', u'г', u'н', u'ғ']
+
+        for i, j in zip(cts_group1, ccs_group1):
+            text = text.replace(i, j)
+
+        return text
+
+    def revise_UAS(self, text):
+
+        # text = text.replace(u' ا', u' ئا')
+        # text = text.replace(u' ە', u' ئە')
+        # text = text.replace(u' ې', u' ئې')
+        # text = text.replace(u' ى', u' ئى')
+        # text = text.replace(u' و', u' ئو')
+        # text = text.replace(u' ۇ', u' ئۇ')
+        # text = text.replace(u' ۆ', u' ئۆ')
+        # text = text.replace(u' ۈ', u' ئۈ')
+        output = ''
+        group1 = [' ', '-', '\n']
+        group2 = [u'ا', u'ە', u'ې', u'ى', u'و', u'ۇ', u'ۆ', u'ۈ']
+        flag = 1 
+        for ichar in text:
+            if ichar in group1:
+                flag = 1
+                output += ichar
+            elif ichar in group2:
+                if flag:
+                    output += u'ئ'
+                output += ichar
+                flag = 0
+            else:
+                output += ichar
+                flag = 0
+        return output
 
     def whatisthis(self, s):
         if isinstance(s, str):
@@ -193,165 +208,3 @@ class UgScriptConverter:
             print "unicode string"
         else:
             print "not a string"
-
-
-    # # UAS to CLS (uyghur ereptin uyghur latingha almashturush)
-    # def UA2LA(self, text):
-    #     # This group characters have similar properties
-    #     uas_group1 = [u'ا', u'ە' , u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د' ,u'ر', u'ز', u'ژ', u'س',\
-    #     u'ش', u'ف', u'ڭ', u'ل', u'لا', u'م', u'ھ' , u'و', u'ۇ',  u'ۆ', u'ۈ', u'ۋ',  u'ې', u'ى', u'ي']
-    #     cts_group1 = [ 'a',  'e',   'b',  'p',  't',  'j', 'ch',  'x' , 'd',  'r',  'z', 'zh',  's',\
-    #      'sh',  'f', 'ng',  'l',  'la',  'm',  'h',  'o',   'u',   'ö',  'ü',  'w',   'é',  'i',  'y']
-    #     uas_group2 = [u'ق', u'ك']
-    #     cts_group2 = [  'q', 'k']
-    #     map1 = dict(zip(uas_group1, cts_group1))
-    #     map2 = dict(zip(uas_group2, cts_group2))
-    #     aldiN = False
-    #     skip = True
-    #     uly = ''
-    #     pos = 0
-    #     size = len(text)
-    #     herp = '' #text[pos]
-    #     while (pos < size):
-    #         # To control unexpected non-unicode characters
-    #         try:
-    #             uly += herp
-    #         except:
-    #             print 'Unexpected Character, please check the results!'
-    #             print herp
-    #         herp = text[pos]
-    #         pos += 1
-    #         if herp == u'ئ':
-    #             aldiN = False
-    #             if(skip == True):
-    #                 herp = ''
-    #             else:
-    #                 herp = '’'
-    #             continue
-    #         elif herp in uas_group1:
-    #             # todo: we should add dict map here
-    #             herp = map1[herp]
-    #             aldiN = False
-    #             skip = False
-    #             continue
-    #         elif herp == u'غ':
-    #             if(aldiN == True):
-    #                 herp = '’gh'
-    #             else:
-    #                 herp = 'gh'
-    #             aldiN = False # todo: why here is different than 'g'
-    #             continue
-    #         elif herp == u'گ':
-    #             if(aldiN == True):
-    #                 herp = '’g'
-    #             else:
-    #                 herp = 'g'
-    #             skip = False
-    #             aldiN = False
-    #             continue
-    #         elif herp in uas_group2:
-    #             herp = map2[herp]
-    #             skip = False
-    #             continue
-    #         elif herp == u'ن':
-    #             herp = 'n'
-    #             skip = False
-    #             aldiN = True
-    #             continue
-    #         else:
-    #             herp = self.U2LSBelge(herp)
-    #             skip = True
-    #             aldiN = False
-    #             continue
-    #     uly += herp
-    #     return uly
-
-
-    # # Todo: change these codes
-    # def LA2UA(self, text):
-    #     # This group characters have similar properties
-    #     text = text.lower()
-    #     # uas_group1 = [u'ا', u'ە' , u'ب', u'پ', u'ت', u'ج', u'چ',  u'خ',  u'د', u'ر', u'ز', u'ژ',  u'س', u'ش',\
-    #     #  u'ف', u'ڭ', u'ل',  u'لا', u'م', u'ھ' , u'و', u'ۇ',  u'ۆ', u'ۈ', u'ۋ',  u'ې', u'ې', u'ى', u'ي']
-    #     # las_group1 = [u'a', u'e',  u'b', u'p', u't', u'j', u'ch', u'x' , u'd', u'r', u'z', u'zh', u's', u'sh',\
-    #     #  u'f', u'ng', u'l', u'la', u'm', u'h',  u'o', u'u',  u'ö', u'ü', u'w', u'é',  u'ë', u'i', u'y']
-    #     # # This group characters have similar properties
-    #     # uas_group2 = [u'ق', u'ك']
-    #     # las_group2 = [u'q', u'k']
-
-    #     uas_group1 = [u'ا', u'ە' , u'ب', u'پ', u'ت', u'ج', u'چ',  u'خ',  u'د', u'ر', u'ز', u'ژ',  u'س', u'ش',\
-    #      u'ف', u'ڭ', u'ل',  u'لا', u'م', u'ھ' , u'و', u'ۇ',  u'ۆ', u'ۈ', u'ۋ',  u'ې', u'ې', u'ى', u'ي']
-    #     las_group1 = [u'a', u'e',  u'b', u'p', u't', u'j', u'ch', u'x' , u'd', u'r', u'z', u'zh', u's', u'sh',\
-    #      u'f', u'ng', u'l', u'la', u'm', u'h',  u'o', u'u',  u'ö', u'ü', u'w', u'é',  u'ë', u'i', u'y']
-    #     # This group characters have similar properties
-    #     uas_group2 = [u'ق', u'ك']
-    #     las_group2 = [u'q', u'k']
-
-    #     map1 = dict(zip(las_group1, uas_group1))
-    #     map2 = dict(zip(las_group2, uas_group2 ))
-    #     aldiN = False
-    #     skip = True
-    #     uly = ''
-    #     pos = 0
-    #     size = len(text)
-    #     herp = '' #text[pos]
-    #     while (pos < size):
-    #         # To control unexpected non-unicode characters
-    #         try:
-    #             uly += herp
-    #         except:
-    #             print 'Unexpected Character, please check the results!'
-    #             print herp
-    #         #print uly
-    #         #print pos
-    #         #print 'text: ' + uly
-    #         herp = text[pos]
-    #         #print herp
-    #         pos += 1
-    #         if herp == u'’':
-    #             aldiN = False
-    #             if(skip == True):
-    #                 herp = ''
-    #             else:
-    #                 herp = u'ئ'
-    #             continue
-    #         elif herp in las_group1:
-    #             # todo: we should add dict map here
-    #             herp = map1[herp]
-    #             aldiN = False
-    #             skip = False
-    #             continue
-    #         elif herp == u'gh':
-    #             if(aldiN == True):
-    #                 herp = u'غ'
-    #             else:
-    #                 herp = u'غ'
-    #             aldiN = False # todo: why here is different than 'g'
-    #             continue
-    #         elif herp == u'g':
-    #             if(aldiN == True):
-    #                 herp = u'گ'
-    #             else:
-    #                 herp = u'گ'
-    #             skip = False
-    #             aldiN = False
-    #             continue
-    #         elif herp in las_group2:
-    #             herp = map2[herp]
-    #             skip = False
-    #             continue
-    #         elif herp == u'n':
-    #             herp = u'ن'
-    #             skip = False
-    #             aldiN = True
-    #             continue
-    #         else:
-    #             herp = self.LS2UBelge(herp)
-    #             skip = True
-    #             aldiN = False
-    #             continue
-    #     uly += herp
-
-    #     uly = self.revise_UAS(uly)
-
-    #     return uly
