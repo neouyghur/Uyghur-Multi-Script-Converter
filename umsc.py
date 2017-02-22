@@ -21,7 +21,7 @@ class Main(QtGui.QMainWindow):
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
 		self.ui.btnConvert.clicked.connect(self.btnConvert_clicked)
-		self.ui.btnDefault.clicked.connect(self.btnDefault_clicked)
+		# self.ui.btnDefault.clicked.connect(self.btnDefault_clicked)
 		self.ui.actionInput_File.triggered.connect(self.selectInputFile)
 		self.ui.actionOutput_File.triggered.connect(self.setOutputFile)
 
@@ -46,6 +46,7 @@ class Main(QtGui.QMainWindow):
 		# 0 Uyghur, 1 Latin, 2 Common Turkish
 		if from_val == to_val:
 			opt_txt = src_txt
+		# Uyghur Arabic
 		elif from_val == 0:
 			if to_val == 1:
 				# Uyghur to Latin
@@ -53,6 +54,10 @@ class Main(QtGui.QMainWindow):
 			elif to_val == 2:
 				# Uyghur to Common Turkish
 				opt_txt = usc.UA2CT(src_txt)
+			elif to_val == 3:
+				# Uyghur to Cyrilik Turkish
+				opt_txt = usc.UA2CC(src_txt)
+		# Latin
 		elif from_val == 1:
 			if to_val == 0:
 				# Latin to Uyghur
@@ -60,6 +65,10 @@ class Main(QtGui.QMainWindow):
 			elif to_val == 2:
 				# Latin to Common Turkish
 				opt_txt = usc.LA2CT(src_txt)
+			elif to_val == 3:
+				# Latin to Cyrilik
+				opt_txt = usc.LA2CC(src_txt)
+		# Common TUrkish
 		elif from_val == 2:
 			if to_val == 0:
 				# Common Turkish to Uyghur
@@ -67,6 +76,20 @@ class Main(QtGui.QMainWindow):
 			elif to_val == 1:
 				# Common Turkish to Latin
 				opt_txt = usc.CT2LA(src_txt)
+			elif to_val == 3:
+				# Common Turkish to Cyrilik
+				opt_txt = usc.CT2CC(src_txt)
+		# Cyrilik
+		elif from_val == 3:
+			if to_val == 0:
+				# Common Turkish to Uyghur
+				opt_txt = usc.CC2UA(src_txt)
+			elif to_val == 1:
+				# Common Turkish to Latin
+				opt_txt = usc.CC2LA(src_txt)
+			elif to_val == 2:
+				# Common Turkish to Cyrilik
+				opt_txt = usc.CT2CC(src_txt)
 
 		if self.isSetFile == False:
 			self.ui.te_opt.setText(opt_txt)

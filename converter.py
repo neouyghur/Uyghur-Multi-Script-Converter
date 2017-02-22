@@ -113,6 +113,18 @@ class UgScriptConverter:
     def UA2LA(self, text):
         return self.CT2LA(self.UA2CT(text))
 
+    def UA2CC(self, text):
+        return self.CT2CC(self.UA2CT(text))
+
+    def CC2UA(self, text):
+        return self.CT2UA(self.CC2CT(text))
+
+    def LA2CC(self, text):
+        return self.CT2CC(self.LA2CT(text))
+
+    def CC2LA(self, text):
+        return self.CT2LA(self.CC2CT(text))
+
 
     def CT2LA(self, text):
 
@@ -161,7 +173,7 @@ class UgScriptConverter:
 
         return text
 
-    def CC2CT(self, text):
+    def CT2CC(self, text):
         cts_group1 = [u'a', u'e', u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ', u'l',\
          u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ']
 
@@ -174,15 +186,6 @@ class UgScriptConverter:
         return text
 
     def revise_UAS(self, text):
-
-        # text = text.replace(u' ا', u' ئا')
-        # text = text.replace(u' ە', u' ئە')
-        # text = text.replace(u' ې', u' ئې')
-        # text = text.replace(u' ى', u' ئى')
-        # text = text.replace(u' و', u' ئو')
-        # text = text.replace(u' ۇ', u' ئۇ')
-        # text = text.replace(u' ۆ', u' ئۆ')
-        # text = text.replace(u' ۈ', u' ئۈ')
         output = ''
         group1 = [' ', '-', '\n']
         group2 = [u'ا', u'ە', u'ې', u'ى', u'و', u'ۇ', u'ۆ', u'ۈ']
