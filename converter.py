@@ -107,27 +107,8 @@ class UgScriptConverter:
         output = self.revise_UAS(output)
         return output
 
-    def LA2UA(self, text):
-        return self.CT2UA(self.LA2CT(text))
-
-    def UA2LA(self, text):
-        return self.CT2LA(self.UA2CT(text))
-
-    def UA2CC(self, text):
-        return self.CT2CC(self.UA2CT(text))
-
-    def CC2UA(self, text):
-        return self.CT2UA(self.CC2CT(text))
-
-    def LA2CC(self, text):
-        return self.CT2CC(self.LA2CT(text))
-
-    def CC2LA(self, text):
-        return self.CT2LA(self.CC2CT(text))
-
-
     def CT2LA(self, text):
-
+    	text = text.lower()
         text = text.replace(u'ng', u"n'g")
         text = text.replace(u'ñ', u"ng")
         text = text.replace(u'ç', u'@h') # don't modify the the @ sign
@@ -145,6 +126,7 @@ class UgScriptConverter:
 
 
     def LA2CT(self, text):
+    	text = text.lower()
         # ch ç # zh j # sh ş # gh ğ
         text = text.replace(u"j", u'c')
         text = text.replace(u"ng", u'ñ')
@@ -162,6 +144,8 @@ class UgScriptConverter:
         return text
 
     def CC2CT(self, text):
+    	text = text.lower()
+
         cts_group1 = [u'a', u'e', u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ', u'l',\
          u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ']
 
@@ -174,6 +158,7 @@ class UgScriptConverter:
         return text
 
     def CT2CC(self, text):
+    	text = text.lower()
         cts_group1 = [u'a', u'e', u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ', u'l',\
          u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n', u'ğ']
 
@@ -203,6 +188,25 @@ class UgScriptConverter:
                 output += ichar
                 flag = 0
         return output
+
+
+    def LA2UA(self, text):
+        return self.CT2UA(self.LA2CT(text))
+
+    def UA2LA(self, text):
+        return self.CT2LA(self.UA2CT(text))
+
+    def UA2CC(self, text):
+        return self.CT2CC(self.UA2CT(text))
+
+    def CC2UA(self, text):
+        return self.CT2UA(self.CC2CT(text))
+
+    def LA2CC(self, text):
+        return self.CT2CC(self.LA2CT(text))
+
+    def CC2LA(self, text):
+        return self.CT2LA(self.CC2CT(text))
 
     def whatisthis(self, s):
         if isinstance(s, str):
