@@ -1,7 +1,7 @@
 # Multiple-Uyghur-Script-Converter
 This converter converts multiple Uyghur scripts such as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkish Script).
 
-| Arabic (UAS) | Common Turkic (CTS) | Latin (ULS)| Cyrillic (UCS)|
+| Arabic (UAS) | Common Turkic (UCTS) | Latin (ULS)| Cyrillic (UCS)|
 | ------ | ------------- | ----- | -------- |
 | ا      | a             | a     | а        |
 | ە      | e             | e     | ә        |
