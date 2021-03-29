@@ -1,5 +1,43 @@
 # Multiple-Uyghur-Script-Converter
-This converter converts multiple Uyghur scripts such as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkish Script).   
+This converter converts multiple Uyghur scripts such as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkish Script).
+
+| Arabic (UAS) | Common Turkic (CTS) | Latin (ULS)| Cyrillic (UCS)|
+| ------ | ------------- | ----- | -------- |
+| ا      | a             | a     | а        |
+| ە      | e             | e     | ә        |
+| ب      | b             | b     | б        |
+| پ      | p             | p     | п        |
+| ت      | t             | t     | т        |
+| ج      | c             | j     | җ        |
+| چ      | ç             | ch    | ч        |
+| خ      | x             | x     | х        |
+| د      | d             | d     | д        |
+| ر      | r             | r     | р        |
+| ز      | z             | z     | з        |
+| ژ      | j             | zh    | ж        |
+| س      | s             | s     | с        |
+| ش      | ş             | sh    | ш        |
+| ف      | f             | f     | ф        |
+| ڭ      | ñ             | ng    | ң        |
+| ل      | l             | l     | л        |
+| م      | m             | m     | м        |
+| ھ      | h             | h     | һ        |
+| و      | o             | o     | о        |
+| ۇ      | u             | u     | у        |
+| ۆ      | ö             | ö     | ө        |
+| ۈ      | ü             | ü     | ү        |
+| ۋ      | v             | w     | в        |
+| ې      | é             | é     | е        |
+| ى      | i             | i     | и        |
+| ي      | y             | y     | й        |
+| ق      | q             | q     | қ        |
+| ك      | k             | k     | к        |
+| گ      | g             | g     | г        |
+| ن      | n             | n     | н        |
+| غ      | ğ             | gh    | ғ        |
+| ئ      |               |       |          |
+| يا     | ya            | ya    | я        |
+| يۇ     | yu            | yu    | ю        |
 
 # Functions
 	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
