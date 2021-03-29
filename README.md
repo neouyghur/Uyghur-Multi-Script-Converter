@@ -43,9 +43,9 @@ This converter converts multiple Uyghur scripts such as ULS(Uyghur Latin Script)
 	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
 	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
 
-# Sample input output examples (örnek misallar CMT)
+# Sample input output examples
 
-Input	| 	Output
+Input (UAS)	| 	Output (UCMT)
 -------- | --------
 قول باش پۇت كۆز | qol baş put köz
 جەڭچى جۇدې		|	ceñçi cudé
