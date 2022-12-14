@@ -85,4 +85,4 @@ php_code  | this python code is improved version of the php code which is writte
 
 - [ ] check the code for bugs
 - [ ] check UI
-- 
+- [ ] Add explanations for the method
