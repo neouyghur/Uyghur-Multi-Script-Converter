@@ -52,20 +52,24 @@ This converter converts multiple Uyghur scripts such as **ULS**(Uyghur Latin Scr
 
 # User interface
 
-Pyqt is used for user interface. mainWindow.ui is graphic file which could be open by clicking on it.
+This converter has a simple user interface. Pyqt5 is used for UI.
 
-```
-#(converting the ui file to python file)        
-pyuic5 -x mainWindow.ui -o mainWindow.py
+# insert an image with markdown
+![user interface](data/ui.png)
 
 Run UI
 ``` 
-python umsc.py (run the gui program)
+python umsc.py
 ```
 
 Run from terminal
 ```
  python converter.py -s uas -t uys -i <input file> -o <output file>
+```
+
+If you are goint to edit UI, convert the ui file to python file.
+```        
+pyuic5 -x mainWindow.ui -o mainWindow.py
 ```
 
 # Files
