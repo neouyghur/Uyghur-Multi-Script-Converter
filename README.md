@@ -1,6 +1,6 @@
 # Multiple-Uyghur-Script-Converter
 This converter converts multiple Uyghur scripts such as **ULS**(Uyghur Latin Script), **UAS**(Uyghur Arabic Script), 
-**CTS**(Common Turkish Script), **UCS**(Uyghur Cyrillic Script) and**UYS** (Uyghur Yengi (new) Script).
+**CTS**(Common Turkish Script), **UCS**(Uyghur Cyrillic Script) and **UYS** (Uyghur Yengi (new) Script).
 
 | UAS | CTS | ULS| UCS|UYS|
 |----|----| ---- | --- | -- |
@@ -54,8 +54,19 @@ This converter converts multiple Uyghur scripts such as **ULS**(Uyghur Latin Scr
 
 Pyqt is used for user interface. mainWindow.ui is graphic file which could be open by clicking on it.
 
-        pyuic5 -x mainWindow.ui -o mainWindow.py #(converting the ui file to python file)
-        python umsc.py (run the gui program)
+```
+#(converting the ui file to python file)        
+pyuic5 -x mainWindow.ui -o mainWindow.py
+
+Run UI
+``` 
+python umsc.py (run the gui program)
+```
+
+Run from terminal
+```
+ python converter.py -s uas -t uys -i <input file> -o <output file>
+```
 
 # Files
 name | info
