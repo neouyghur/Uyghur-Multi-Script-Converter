@@ -1,7 +1,9 @@
 # Multiple-Uyghur-Script-Converter
-This converter converts multiple Uyghur scripts such as **ULS**(Uyghur Latin Script), **UAS**(Uyghur Arabic Script), 
-**CTS**(Common Turkish Script), **UCS**(Uyghur Cyrillic Script) and **UYS** (Uyghur Yengi (new) Script).
+This converter converts multiple Uyghur scripts such as **ULS** (Uyghur Latin Script), **UAS** (Uyghur Arabic Script), 
+**CTS** (Common Turkish Script), **UCS** (Uyghur Cyrillic Script) and **UYS** (Uyghur Yengi (new) Script).
 
+
+## Mapping table
 | UAS | CTS | ULS| UCS|UYS|
 |----|----| ---- | --- | -- |
 | ا  | a  | a    | а   |a |
@@ -40,11 +42,7 @@ This converter converts multiple Uyghur scripts such as **ULS**(Uyghur Latin Scr
 | يا | ya | ya   | я   |ya |
 | يۇ | yu | yu   | ю   |yu |
 
-# Functions
-	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
-	UAS to UCT (uyghur arab yeziqidin ortaq turk yeziqigha)
-
-# Sample input and output examples
+## Sample input and output examples
 
 |UAS|CTS|ULS|UCS| UYS                                                                                                                                                                                                                                                                                                                                                                         |
 |-------- | ------ | ---- | -----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -54,7 +52,6 @@ This converter converts multiple Uyghur scripts such as **ULS**(Uyghur Latin Scr
 
 This converter has a simple user interface. Pyqt5 is used for UI.
 
-# insert an image with markdown
 ![user interface](data/ui.png)
 
 Run UI
@@ -72,7 +69,7 @@ If you are goint to edit UI, convert the ui file to python file.
 pyuic5 -x mainWindow.ui -o mainWindow.py
 ```
 
-# Files
+## Files
 name | info
 -----|----
 mainWindow.ui | pyqt user interface
@@ -81,7 +78,7 @@ umsc.py | main function for running the program which includes mainWindow.py and
 materials | official materials for uyghur script converter
 php_code  | this python code is improved version of the php code which is written by Mr. Gheyret Kenji.
 
-# TODO
+## TODO
 
 - [ ] check the code for bugs
 - [ ] check UI
