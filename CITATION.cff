@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Osman
+    given-names: Tursun
+    orcid: https://orcid.org/0000-0002-0592-0864
+title: " Multiple Uyghur Script Converter"
+version: 1.0

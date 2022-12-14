@@ -1,43 +1,44 @@
 # Multiple-Uyghur-Script-Converter
-This converter converts multiple Uyghur scripts such as ULS(Uyghur Latin Script), UAS(Uyghur Arabic Script), CTS(Common Turkish Script).
+This converter converts multiple Uyghur scripts such as **ULS**(Uyghur Latin Script), **UAS**(Uyghur Arabic Script), 
+**CTS**(Common Turkish Script), **UCS**(Uyghur Cyrillic Script) and**UYS** (Uyghur Yengi (new) Script).
 
-| Arabic (UAS) | Common Turkic (UCTS) | Latin (ULS)| Cyrillic (UCS)|
-| ------ | ------------- | ----- | -------- |
-| ا      | a             | a     | а        |
-| ە      | e             | e     | ә        |
-| ب      | b             | b     | б        |
-| پ      | p             | p     | п        |
-| ت      | t             | t     | т        |
-| ج      | c             | j     | җ        |
-| چ      | ç             | ch    | ч        |
-| خ      | x             | x     | х        |
-| د      | d             | d     | д        |
-| ر      | r             | r     | р        |
-| ز      | z             | z     | з        |
-| ژ      | j             | zh    | ж        |
-| س      | s             | s     | с        |
-| ش      | ş             | sh    | ш        |
-| ف      | f             | f     | ф        |
-| ڭ      | ñ             | ng    | ң        |
-| ل      | l             | l     | л        |
-| م      | m             | m     | м        |
-| ھ      | h             | h     | һ        |
-| و      | o             | o     | о        |
-| ۇ      | u             | u     | у        |
-| ۆ      | ö             | ö     | ө        |
-| ۈ      | ü             | ü     | ү        |
-| ۋ      | v             | w     | в        |
-| ې      | é             | é     | е        |
-| ى      | i             | i     | и        |
-| ي      | y             | y     | й        |
-| ق      | q             | q     | қ        |
-| ك      | k             | k     | к        |
-| گ      | g             | g     | г        |
-| ن      | n             | n     | н        |
-| غ      | ğ             | gh    | ғ        |
-| ئ      |               |       |          |
-| يا     | ya            | ya    | я        |
-| يۇ     | yu            | yu    | ю        |
+| UAS | CTS | ULS| UCS|UYS|
+|----|----| ---- | --- | -- |
+| ا  | a  | a    | а   |a |
+| ە  | e  | e    | ә   |ə |
+| ب  | b  | b    | б   |b |
+| پ  | p  | p    | п   |p |  
+| ت  | t  | t    | т   |t |
+| ج  | c  | j    | җ   |j |
+| چ  | ç  | ch   | ч   |q |
+| خ  | x  | x    | х   |h |
+| د  | d  | d    | д   |d |
+| ر  | r  | r    | р   |r |
+| ز  | z  | z    | з   |z |
+| ژ  | j  | zh   | ж   |ⱬ |
+| س  | s  | s    | с   |s |
+| ش  | ş  | sh   | ш   |x |
+| ف  | f  | f    | ф   |f |
+| ڭ  | ñ  | ng   | ң   |ng |
+| ل  | l  | l    | л   |l |
+| م  | m  | m    | м   |m |
+| ھ  | h  | h    | һ   |ⱨ |
+| و  | o  | o    | о   |o |
+| ۇ  | u  | u    | у   |u |
+| ۆ  | ö  | ö    | ө   |ɵ |
+| ۈ  | ü  | ü    | ү   |ü |
+| ۋ  | v  | w    | в   |w |
+| ې  | é  | é    | е   |e |
+| ى  | i  | i    | и   |i |
+| ي  | y  | y    | й   |y |
+| ق  | q  | q    | қ   |ⱪ |
+| ك  | k  | k    | к   |k |
+| گ  | g  | g    | г   |g |
+| ن  | n  | n    | н   |n |
+| غ  | ğ  | gh   | ғ   |ƣ |
+| ئ  |    |      |     | |
+| يا | ya | ya   | я   |ya |
+| يۇ | yu | yu   | ю   |yu |
 
 # Functions
 	UAS to ULS (uyghur arab yeziqidin uyghur latin yeziqigha)
@@ -45,7 +46,7 @@ This converter converts multiple Uyghur scripts such as ULS(Uyghur Latin Script)
 
 # Sample input output examples
 
-Input (UAS)	| 	Output (UCMT)
+Input (UAS)	| 	Output (CTS)
 -------- | --------
 قول باش پۇت كۆز | qol baş put köz
 جەڭچى جۇدې		|	ceñçi cudé
@@ -57,14 +58,14 @@ Input (UAS)	| 	Output (UCMT)
 ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس | anar encür orda uruş  ördek üzüm élan inkas
 ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي | inik'ana es'et radi'o mes'ul qari'örük na'ümid  it'éyiq cem'iy
 نەمەنگان ئۆزخان پاسخا بايرىمى |  nemengan özxan pasxa bayrimi
-مائارىپ مۇئەللىم دائىرە مۇئەييەن تەبىئىي پائالىيەت ئىسھاق ئۆزبېكىستانغا ھىنگان چەكلەنگەن گاڭگىراپ باشلانغۇچ جەمئىيەت| ma'arip mu'ellim da'ire mu'eyyen tebi'iy pa'aliyet ishaq özbékistanğa hingan çeklengen gañgirap başlanğuç cem'iyet
-قول باش پۇت كۆز جەڭچى جۇدې سان سەي ئې شىر شاڭخەي كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر ۋەتەن ۋيېتنام شىنجاڭ ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي نەمەنگان ئۆزخان پاسخا بايرىمى مائارىپ مۇئەللىم دائىرە مۇئەييەن تەبىئىي پائالىيەت ئىسھاق ئۆزبېكىستانغا ھىنگان چەكلەنگەن گاڭگىراپ باشلانغۇچ جەمئىيەت جۇڭخۇا| qol baş put köz ceñçi cudé san sey é şir şañxey kitab veten tomur  kömür éliktir veten vyétnam şincañ anar encür orda uruş  ördek üzüm élan inkas inik'ana es'et radio mes'ul qariörük naümid  it'éyiq cem'iy nemengan özxan pasxa bayrimi maarip muellim daire mueyyen tebiiy paaliyet ishaq özbékistanğa hingan çeklengen gañgirap başlanğuç cem'iyet jungxua
+مائارىپ مۇئەللىم دائىرە مۇئەييەن تەبىئىي پائالىيەت ئىسھاق ئۆزبېكىستانغا ھىنگان چەكلەنگەن گاڭگىراپ باشلانغۇچ جەمئىيەت| ma'arip mu'ellim da'ire mu'eyyen tebi'iy pa'aliyet is'haq özbékistanğa hingan çeklengen gañgirap başlanğuç cem'iyet
+قول باش پۇت كۆز جەڭچى جۇدې سان سەي ئې شىر شاڭخەي كىتاب ۋەتەن تومۇر  كۆمۈر ئېلىكتىر ۋەتەن ۋيېتنام شىنجاڭ ئانار ئەنجۈر ئوردا ئۇرۇش  ئۆردەك ئۈزۈم ئېلان ئىنكاس ئىنىكئانا ئەسئەت رادىئو مەسئۇل قارىئۆرۈك نائۈمىد  ئىتئېيىق جەمئىي نەمەنگان ئۆزخان پاسخا بايرىمى مائارىپ مۇئەللىم دائىرە مۇئەييەن تەبىئىي پائالىيەت ئىسھاق ئۆزبېكىستانغا ھىنگان چەكلەنگەن گاڭگىراپ باشلانغۇچ جەمئىيەت جۇڭخۇا| qol baş put köz ceñçi cudé san sey é şir şañxey kitab veten tomur  kömür éliktir veten vyétnam şincañ anar encür orda uruş  ördek üzüm élan inkas inik'ana es'et radio mes'ul qariörük naümid  it'éyiq cem'iy nemengan özxan pasxa bayrimi maarip muellim daire mueyyen tebiiy paaliyet ishaq özbékistanğa hingan çeklengen gañgirap başlanğuç cem'iyet cuñxua
 
 # User interface
 
 Pyqt is used for user interface. mainWindow.ui is graphic file which could be open by clicking on it.
 
-        pyuic4 -x mainWindow.ui -o mainWindow.py (converting the ui file to python file)
+        pyuic5 -x mainWindow.ui -o mainWindow.py #(converting the ui file to python file)
         python umsc.py (run the gui program)
 
 # Files
@@ -76,3 +77,8 @@ umsc.py | main function for running the program which includes mainWindow.py and
 materials | official materials for uyghur script converter
 php_code  | this python code is improved version of the php code which is written by Mr. Gheyret Kenji.
 
+# TODO
+
+- [ ] check the code for bugs
+- [ ] check UI
+- 
