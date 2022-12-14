@@ -83,3 +83,25 @@ php_code  | this python code is improved version of the php code which is writte
 - [ ] check the code for bugs
 - [ ] check UI
 - [ ] Add explanations for the method
+
+
+## Citation
+
+If you wish to cite this project, feel free to use this [BibTeX](http://www.bibtex.org/) reference:
+
+```bibtex
+@misc{umsc,
+    title={Multiple Uyghur Script Converter},
+    author={Osman Tursun},
+    year={2022},
+    month={Dec},
+    publisher = {GitHub},
+    howpublished = {\url{https://github.com/neouyghur/Multiple-Uyghur-Script-Converter.git}}
+}
+```
+
+## Contributing
+Feel free to raise issue and pull request.
+
+## License
+Distributed under the Apache 2.0 License. See [`LICENSE`](LICENSE) for more information.
