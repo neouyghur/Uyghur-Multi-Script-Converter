@@ -87,18 +87,7 @@ php_code  | this python code is improved version of the php code which is writte
 
 ## Citation
 
-If you wish to cite this project, feel free to use this [BibTeX](http://www.bibtex.org/) reference:
-
-```bibtex
-@misc{umsc,
-    title={Multiple Uyghur Script Converter},
-    author={Osman Tursun},
-    year={2022},
-    month={Dec},
-    publisher = {GitHub},
-    howpublished = {\url{https://github.com/neouyghur/Multiple-Uyghur-Script-Converter.git}}
-}
-```
+If you wish to cite this project, please use `cite this repository`. 
 
 ## Contributing
 Feel free to raise issue and pull request.
