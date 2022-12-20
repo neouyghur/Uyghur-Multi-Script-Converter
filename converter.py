@@ -324,7 +324,7 @@ class UgScriptConverter:
 
     def convertCTS2UCS(self, text):
         text = text.lower()
-        text = self._repalce_via_table(text, self.__cts_group1, self.__ucs_group1)
+        text = self.replace("ya","я").replace("yu","ю")._repalce_via_table(text, self.__cts_group1, self.__ucs_group1)
         # return text.replace("'", "")
         return text
 
