@@ -7,7 +7,7 @@
 
 import sys
 import os
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtCore, QtGui, QtWidgets
 from mainWindow import Ui_MainWindow
 from converter import UgScriptConverter
 
@@ -34,7 +34,9 @@ class Main(QtWidgets.QMainWindow):
             1: 'CTS',
             2: 'ULS',
             3: 'UCS',
-            4: 'UYS'
+            4: 'UYS',
+            5: 'API',
+            6: 'UZBEK'
         }
         self.set_default_source_text()
 
@@ -127,4 +129,4 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = Main()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

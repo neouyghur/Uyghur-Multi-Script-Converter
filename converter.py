@@ -45,6 +45,13 @@ class UgScriptConverter:
                         u'л', u'ла', u'м', u'һ', u'о', u'у', u'ө', u'ү', u'в', u'е', u'и', u'й', u'қ', u'к', u'г', u'н',
                         u'ғ', u'?', u',', u';', u'*']
 
+        # I have to improve this. It is not complete
+        # Self.__api_groupd1 = ["ɑ", "æ", "b", "p", "t", "Ǯ", "/t͡ʃ/", "/χ/", "/d/", "/r/", "/z/", "/ʒ/",
+        #                       "/s/", "/ʃ/", "/f/", "/ŋ/", "/l/", "/m/", "/h/", "/o/",
+        #     "/u/", "/ø/", "/y/", "/w/", "/ɛ/", "/i/", "/j/", "/q/", "/k/", "/ɡ/",
+        #     "/n/", "/ʁ/"
+        # ]
+
     def __call__(self, text, source_script=None, target_script=None):
         if source_script:
             self.source_script = source_script.upper()
@@ -64,6 +71,8 @@ class UgScriptConverter:
                 return self.convertUAS2ULS(text)
             elif self.target_script == 'UYS':
                 return self.convertUAS2UYS(text)
+            elif self.target_script == 'UZBEK':
+                return self.convertUAStoUZBEK(text)
             elif self.target_script == self.target_script:
                 return text
             else:
@@ -323,6 +332,21 @@ class UgScriptConverter:
             .replace(u'ğ', u"ƣ")
         return text
 
+    def convertCTS2UZBEK(self, text):
+        text = text.lower()
+        text = text.replace(u"e", u'a') \
+            .replace(u'j', u"j") \
+            .replace(u'c', u"j") \
+            .replace(u'q', u"q") \
+            .replace(u'ç', u"ch") \
+            .replace(u'ş', u"sh") \
+            .replace(u'ñ', u"ng") \
+            .replace(u'ö', u"oʻ") \
+            .replace(u'é', u"e") \
+            .replace(u'ğ', u"gʻ")
+        return text
+
+
     def convertCTS2UCS(self, text):
         text = text.lower()
         text = text.replace("ya", "я").replace("yu", "ю")
@@ -509,6 +533,19 @@ class UgScriptConverter:
 
         """
         return self.convertCTS2UCS(self.convertUYS2CTS(text))
+
+    def convertUAStoUZBEK(self, text):
+        """
+        UAS to UZBEK
+        Parameters
+        ----------
+        text
+
+        Returns
+        -------
+
+        """
+        return self.convertCTS2UZBEK(self.convertUAS2CTS(text))
 
 
 def args_parser():

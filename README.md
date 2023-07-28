@@ -3,44 +3,48 @@ This converter converts multiple Uyghur scripts such as **ULS** (Uyghur Latin Sc
 **CTS** (Common Turkish Script), **UCS** (Uyghur Cyrillic Script) and **UYS** (Uyghur Yengi (new) Script).
 
 
+API and Uzbek are currently developing. The mapping might not be very accurate. Especially for Uzbek,
+it is not very clear how to map "ئا" and "ئە" to Uzbek.
+
+
 ## Mapping table
 | UAS | CTS | ULS| UCS|UYS| API | Uzbek |
-|----|----| ---- | --- | -- |----|-------|
-| ا  | a  | a    | а   |a |  /ɑ/ | a     |
-| ە  | e  | e    | ә   |ə |  /æ/ |       |
-| ب  | b  | b    | б   |b |  /b/ | b     |
-| پ  | p  | p    | п   |p |   /p/ | p     | 
-| ت  | t  | t    | т   |t | /t/ | t     |
-| ج  | c  | j    | җ   |j | /d͡ʒ/ |       |
-| چ  | ç  | ch   | ч   |q |  /t͡ʃ/ | ch    |
-| خ  | x  | x    | х   |h | /χ/ | x     |
-| د  | d  | d    | д   |d |  /d/ | d     |
-| ر  | r  | r    | р   |r |  /r/ | r     |
-| ز  | z  | z    | з   |z |  /z/ | z     |
-| ژ  | j  | zh   | ж   |ⱬ | /ʒ/ |       |
-| س  | s  | s    | с   |s |  /s/ | s     |
-| ش  | ş  | sh   | ш   |x |  /ʃ/ | sh    |
-| ف  | f  | f    | ф   |f |  /f/ | f     |
-| ڭ  | ñ  | ng   | ң   |ng | /ŋ/ | ng    |
-| ل  | l  | l    | л   |l |  /l/ | l     |
-| م  | m  | m    | м   |m |  /m/ | m     |
-| ھ  | h  | h    | һ   |ⱨ |  /h/ | h     |
-| و  | o  | o    | о   |o |  /o/ | o     |
-| ۇ  | u  | u    | у   |u |   /u/ | u     |
-| ۆ  | ö  | ö    | ө   |ɵ |  /ø/ | o'    |
-| ۈ  | ü  | ü    | ү   |ü |  /y/ | u'    |
-| ۋ  | v  | w    | в   |w |  /w/ | v     |
-| ې  | é  | é    | е   |e | /ɛ/ | e     |
-| ى  | i  | i    | и   |i | /i/ | i     |
-| ي  | y  | y    | й   |y | /j/ | y     |
-| ق  | q  | q    | қ   |ⱪ | /q/ | q     |
-| ك  | k  | k    | к   |k |  /k/ | k     |
-| گ  | g  | g    | г   |g | /ɡ/| g     |
-| ن  | n  | n    | н   |n |   /n/ | n     |
-| غ  | ğ  | gh   | ғ   |ƣ | /ʁ/ | g'    |
-| ئ  |    |      |     | |    |       |
-| يا | ya | ya   | я   |ya |    | ya    |
-| يۇ | yu | yu   | ю   |yu |    | yu    |
+|-----|----| ---- | --- | -- |----|---|
+| ا   | a  | a    | а   |a |  /ɑ/ | o |
+| ە   | e  | e    | ә   |ə |  /æ/ | a |
+| ب   | b  | b    | б   |b |  /b/ | b |
+| پ   | p  | p    | п   |p |   /p/ | p | 
+| ت   | t  | t    | т   |t | /t/ | t |
+| ج   | c  | j    | җ   |j | /d͡ʒ/ |   |
+| چ   | ç  | ch   | ч   |q |  /t͡ʃ/ | ch |
+| خ   | x  | x    | х   |h | /χ/ | x |
+| د   | d  | d    | д   |d |  /d/ | d |
+| ر   | r  | r    | р   |r |  /r/ | r |
+| ز   | z  | z    | з   |z |  /z/ | z |
+| ژ   | j  | zh   | ж   |ⱬ | /ʒ/ |   |
+| س   | s  | s    | с   |s |  /s/ | s |
+| ش   | ş  | sh   | ш   |x |  /ʃ/ | sh |
+| ف   | f  | f    | ф   |f |  /f/ | f |
+| ڭ   | ñ  | ng   | ң   |ng | /ŋ/ | ng |
+| ل   | l  | l    | л   |l |  /l/ | l |
+| م   | m  | m    | м   |m |  /m/ | m |
+| ھ   | h  | h    | һ   |ⱨ |  /h/ | h |
+| و   | o  | o    | о   |o |  /o/ | o |
+| ۇ   | u  | u    | у   |u |   /u/ | u |
+| ۆ   | ö  | ö    | ө   |ɵ |  /ø/ | oʻ |
+| ۈ   | ü  | ü    | ү   |ü |  /y/ | uʻ |
+| ۋ   | v  | w    | в   |w |  /w/ | v |
+| ې   | é  | é    | е   |e | /ɛ/ | e |
+| ى   | i  | i    | и   |i | /i/ | i |
+| ي   | y  | y    | й   |y | /j/ | y |
+| ق   | q  | q    | қ   |ⱪ | /q/ | q |
+| ك   | k  | k    | к   |k |  /k/ | k |
+| گ   | g  | g    | г   |g | /ɡ/| g |
+| ن   | n  | n    | н   |n |   /n/ | n |
+| غ   | ğ  | gh   | ғ   |ƣ | /ʁ/ | gʻ |
+| ئ   |    |      |     | |    |   |
+| يا  | ya | ya   | я   |ya |    | ya |
+| يۇ  | yu | yu   | ю   |yu |    | yu |
 
 ## Sample input and output examples
 
@@ -50,7 +54,7 @@ This converter converts multiple Uyghur scripts such as **ULS** (Uyghur Latin Sc
 
 # User interface
 
-This converter has a simple user interface. Pyqt5 is used for UI.
+This converter has a simple user interface. Pyqt6 is used for UI.
 
 ![user interface](data/ui.png)
 
@@ -66,7 +70,7 @@ Run from terminal
 
 If you are goint to edit UI, convert the ui file to python file.
 ```        
-pyuic5 -x mainWindow.ui -o mainWindow.py
+pyuic6 -x mainWindow.ui -o mainWindow.py
 ```
 
 ## Files
