@@ -4,43 +4,43 @@ This converter converts multiple Uyghur scripts such as **ULS** (Uyghur Latin Sc
 
 
 ## Mapping table
-| UAS | CTS | ULS| UCS|UYS|
-|----|----| ---- | --- | -- |
-| ا  | a  | a    | а   |a |
-| ە  | e  | e    | ә   |ə |
-| ب  | b  | b    | б   |b |
-| پ  | p  | p    | п   |p |  
-| ت  | t  | t    | т   |t |
-| ج  | c  | j    | җ   |j |
-| چ  | ç  | ch   | ч   |q |
-| خ  | x  | x    | х   |h |
-| د  | d  | d    | д   |d |
-| ر  | r  | r    | р   |r |
-| ز  | z  | z    | з   |z |
-| ژ  | j  | zh   | ж   |ⱬ |
-| س  | s  | s    | с   |s |
-| ش  | ş  | sh   | ш   |x |
-| ف  | f  | f    | ф   |f |
-| ڭ  | ñ  | ng   | ң   |ng |
-| ل  | l  | l    | л   |l |
-| م  | m  | m    | м   |m |
-| ھ  | h  | h    | һ   |ⱨ |
-| و  | o  | o    | о   |o |
-| ۇ  | u  | u    | у   |u |
-| ۆ  | ö  | ö    | ө   |ɵ |
-| ۈ  | ü  | ü    | ү   |ü |
-| ۋ  | v  | w    | в   |w |
-| ې  | é  | é    | е   |e |
-| ى  | i  | i    | и   |i |
-| ي  | y  | y    | й   |y |
-| ق  | q  | q    | қ   |ⱪ |
-| ك  | k  | k    | к   |k |
-| گ  | g  | g    | г   |g |
-| ن  | n  | n    | н   |n |
-| غ  | ğ  | gh   | ғ   |ƣ |
-| ئ  |    |      |     | |
-| يا | ya | ya   | я   |ya |
-| يۇ | yu | yu   | ю   |yu |
+| UAS | CTS | ULS| UCS|UYS| API | Uzbek |
+|----|----| ---- | --- | -- |----|-------|
+| ا  | a  | a    | а   |a |  /ɑ/ | a     |
+| ە  | e  | e    | ә   |ə |  /æ/ |       |
+| ب  | b  | b    | б   |b |  /b/ | b     |
+| پ  | p  | p    | п   |p |   /p/ | p     | 
+| ت  | t  | t    | т   |t | /t/ | t     |
+| ج  | c  | j    | җ   |j | /d͡ʒ/ |       |
+| چ  | ç  | ch   | ч   |q |  /t͡ʃ/ | ch    |
+| خ  | x  | x    | х   |h | /χ/ | x     |
+| د  | d  | d    | д   |d |  /d/ | d     |
+| ر  | r  | r    | р   |r |  /r/ | r     |
+| ز  | z  | z    | з   |z |  /z/ | z     |
+| ژ  | j  | zh   | ж   |ⱬ | /ʒ/ |       |
+| س  | s  | s    | с   |s |  /s/ | s     |
+| ش  | ş  | sh   | ш   |x |  /ʃ/ | sh    |
+| ف  | f  | f    | ф   |f |  /f/ | f     |
+| ڭ  | ñ  | ng   | ң   |ng | /ŋ/ | ng    |
+| ل  | l  | l    | л   |l |  /l/ | l     |
+| م  | m  | m    | м   |m |  /m/ | m     |
+| ھ  | h  | h    | һ   |ⱨ |  /h/ | h     |
+| و  | o  | o    | о   |o |  /o/ | o     |
+| ۇ  | u  | u    | у   |u |   /u/ | u     |
+| ۆ  | ö  | ö    | ө   |ɵ |  /ø/ | o'    |
+| ۈ  | ü  | ü    | ү   |ü |  /y/ | u'    |
+| ۋ  | v  | w    | в   |w |  /w/ | v     |
+| ې  | é  | é    | е   |e | /ɛ/ | e     |
+| ى  | i  | i    | и   |i | /i/ | i     |
+| ي  | y  | y    | й   |y | /j/ | y     |
+| ق  | q  | q    | қ   |ⱪ | /q/ | q     |
+| ك  | k  | k    | к   |k |  /k/ | k     |
+| گ  | g  | g    | г   |g | /ɡ/| g     |
+| ن  | n  | n    | н   |n |   /n/ | n     |
+| غ  | ğ  | gh   | ғ   |ƣ | /ʁ/ | g'    |
+| ئ  |    |      |     | |    |       |
+| يا | ya | ya   | я   |ya |    | ya    |
+| يۇ | yu | yu   | ю   |yu |    | yu    |
 
 ## Sample input and output examples
 
