@@ -21,18 +21,16 @@ UAS | Uyghur Arabic Script
 CTS |Common Turkic Script
 UCS | Uyghur Cyrillic Script
 
-
 '''
 import regex as re
-import os
 import argparse
 
 
-class UgScriptConverter:
-    def __init__(self, source_script, target_script, apostrophe):
+class UgMultiScriptConverter:
+    def __init__(self, source_script, target_script, less_apostrophe=False):
         self.source_script = source_script
         self.target_script = target_script
-        self.apostrophe = apostrophe
+        self.less_apostrophe = less_apostrophe
 
         self.__uas_group1 = [u'ا', u'ە', u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د', u'ر', u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ',
                         u'ل', u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن',
@@ -181,7 +179,7 @@ class UgScriptConverter:
         text = re.sub(r'(\s|^)(\u0626)(\w+)', lambda m: m.group(1) + m.group(3), text)
         # Replace a "U+0626" with "'" if "U+0626" is appeared in a word and its previous character is not in
         # [u'a', u'e', u'é', u'i', u'o', u'u', u'ö', u'ü']
-        if not self.apostrophe:
+        if self.less_apostrophe:
             text = re.sub(r'(([aeéiouöü])\u0626)', lambda m: m.group()[0], text)
         text = text.replace('\u0626', u"'")
         return text
@@ -252,7 +250,7 @@ class UgScriptConverter:
         # Threre is special case cuñxua which should not be converted to cuñxu'a as it is written in UAS as  جۇڭخۇا
         # We ignore this special case.
 
-        if self.apostrophe:
+        if not self.less_apostrophe:
             text = re.sub(r'(?<=[^aebptcçxdrzjsşfñllamhouöüvéiyqkgnğ]|^)[aeéiouöü]',
                           lambda m: u'\u0626' + m.group(), text)
 
@@ -554,17 +552,17 @@ def args_parser():
     parser.add_argument('-t', '--target', help='target script', required=True)
     parser.add_argument('-i', '--input', help='input file', required=True)
     parser.add_argument('-o', '--output', help='output file', required=True)
-    parser.add_argument('--apostrophe', default=True, help='Put apostrophe between vowels', required=False)
+    parser.add_argument('--la', action='store_true', default=False, help='Removing apostrophe between vowels', required=False)
     args = parser.parse_args()
     return args
 
-
 if __name__ == "__main__":
     args = args_parser()
+    print(args.less_apostrophe)
     with open(args.input, 'r') as f:
         text = f.read()
 
-    converter = UgScriptConverter(args.source, args.target, args.apostrophe)
+    converter = UgMultiScriptConverter(args.source, args.target, less_apostrophe=args.apostrophe)
     text = converter(text)
     with open(args.output, 'w') as f:
         f.write(text)
