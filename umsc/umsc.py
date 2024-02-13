@@ -20,6 +20,7 @@ CPS | Chinese Pinyin Script
 UAS | Uyghur Arabic Script
 CTS |Common Turkic Script
 UCS | Uyghur Cyrillic Script
+XJU | Xinjinag University English Case Sensitive
 
 '''
 import regex as re
@@ -30,7 +31,7 @@ class UgMultiScriptConverter:
     def __init__(self, source_script, target_script, less_apostrophe=False):
         self.source_script = source_script
         self.target_script = target_script
-        self.less_apostrophe = less_apostrophe
+        # self.less_apostrophe = less_apostrophe
 
         self.__uas_group1 = [u'ا', u'ە', u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د', u'ر', u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ',
                         u'ل', u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن',
@@ -60,79 +61,18 @@ class UgMultiScriptConverter:
         else:
             self.target_script = self.target_script.upper()
 
-        if self.source_script == 'UAS':
-            if self.target_script == 'CTS':
-                return self.convertUAS2CTS(text)
-            elif self.target_script == 'UCS':
-                return self.convertUAS2UCS(text)
-            elif self.target_script == 'ULS':
-                return self.convertUAS2ULS(text)
-            elif self.target_script == 'UYS':
-                return self.convertUAS2UYS(text)
-            elif self.target_script == 'UZBEK':
-                return self.convertUAStoUZBEK(text)
-            elif self.target_script == self.target_script:
-                return text
-            else:
-                raise ValueError('Target script not supported')
+        # If source and target are same, then return original text
+        if self.target_script == self.source_script:
+            return text  # No conversion needed
+        
+        method_name = f'{self.source_script}2{self.target_script}'
 
-        elif self.source_script == 'ULS':
-            if self.target_script == 'CTS':
-                return self.convertULS2CTS(text)
-            elif self.target_script == 'UCS':
-                return self.convertULS2UCS(text)
-            elif self.target_script == 'UAS':
-                return self.convertULS2UAS(text)
-            elif self.target_script == 'UYS':
-                return self.convertULS2UYS(text)
-            elif self.target_script == self.target_script:
-                return text
-            else:
-                raise ValueError('Target script not supported')
+        convert_method = getattr(self, method_name, None)
 
-        elif self.source_script == 'CTS':
-            if self.target_script == 'UAS':
-                return self.convertCTS2UAS(text)
-            elif self.target_script == 'UCS':
-                return self.convertCTS2UCS(text)
-            elif self.target_script == 'ULS':
-                return self.convertCTS2ULS(text)
-            elif self.target_script == 'UYS':
-                return self.convertCTS2UYS(text)
-            elif self.target_script == self.target_script:
-                return text
-            else:
-                raise ValueError('Target script not supported')
-
-        elif self.source_script == 'UCS':
-            if self.target_script == 'UAS':
-                return self.convertUCS2UAS(text)
-            elif self.target_script == 'CTS':
-                return self.convertUCS2CTS(text)
-            elif self.target_script == 'ULS':
-                return self.convertUCS2ULS(text)
-            elif self.target_script == 'UYS':
-                return self.convertUCS2UYS(text)
-            elif self.target_script == self.target_script:
-                return text
-            else:
-                raise ValueError('Target script not supported')
-
-        elif self.source_script == 'UYS':
-            if self.target_script == 'UAS':
-                return self.convertUYS2UAS(text)
-            elif self.target_script == 'CTS':
-                return self.convertUYS2CTS(text)
-            elif self.target_script == 'ULS':
-                return self.convertUYS2ULS(text)
-            elif self.target_script == 'UCS':
-                return self.convertUYS2UCS(text)
-            elif self.target_script == self.target_script:
-                return text
-            else:
-                raise ValueError('Target script not supported')
+        if convert_method:
+            return convert_method(text)
         else:
-            raise ValueError('Source script not supported')
+            raise ValueError(f'Conversion from {self.source_script} to {self.target_script} not supported')
 
     def isPureUyghurScript(herp):
         m = re.search('[\u0621-\u06ff]', herp)
@@ -148,7 +88,7 @@ class UgMultiScriptConverter:
 
     # ----------------------------------------------
     # Source script to common turkic script
-    def convertUAS2CTS(self, text):
+    def UAS2CTS(self, text, keep_apstrophe=False):
         """
         UAS to CTS
         Parameters
@@ -160,10 +100,10 @@ class UgMultiScriptConverter:
         text
         """
         text = self._repalce_via_table(text, self.__uas_group1, self.__cts_group1)
-        text = self.__revise_CTS(text)
+        text = self.__revise_CTS(text, keep_apstrophe)
         return text
 
-    def __revise_CTS(self, text):
+    def __revise_CTS(self, text, keep_apostrophes):
         """
         revise CTS
         Parameters
@@ -179,12 +119,12 @@ class UgMultiScriptConverter:
         text = re.sub(r'(\s|^)(\u0626)(\w+)', lambda m: m.group(1) + m.group(3), text)
         # Replace a "U+0626" with "'" if "U+0626" is appeared in a word and its previous character is not in
         # [u'a', u'e', u'é', u'i', u'o', u'u', u'ö', u'ü']
-        if self.less_apostrophe:
+        if not keep_apostrophes:
             text = re.sub(r'(([aeéiouöü])\u0626)', lambda m: m.group()[0], text)
         text = text.replace('\u0626', u"'")
         return text
 
-    def convertULS2CTS(self, text):
+    def ULS2CTS(self, text):
         text = text.lower()
         # ch ç # zh j # sh ş # gh ğ
         text = text.replace(u"j", u'c') \
@@ -200,7 +140,7 @@ class UgMultiScriptConverter:
             .replace(u'ch', u'ç')
         return text
 
-    def convertUYS2CTS(self, text):
+    def UYS2CTS(self, text):
         text = text.lower()
         # e:ə c:j ç:q x:h j:ⱬ ş:x ñ:ng ö:ø ü:ü  v:w é:e
         # q:ⱪ ğ:ƣ
@@ -220,7 +160,7 @@ class UgMultiScriptConverter:
             .replace(u"ƣ", u'ğ')
         return text
 
-    def convertUCS2CTS(self, text):
+    def UCS2CTS(self, text):
         text = text.lower()
         text = self._repalce_via_table(text, self.__ucs_group1, self.__cts_group1)
         text = text.replace("я", "ya").replace("ю", "yu")
@@ -229,7 +169,7 @@ class UgMultiScriptConverter:
     # ----------------------------------------------
     # Common turkic script to target script
 
-    def convertCTS2UAS(self, text):
+    def CTS2UAS(self, text):
         """
         CTS to UAS
         Parameters
@@ -241,44 +181,21 @@ class UgMultiScriptConverter:
           text
         """
 
-        # (?<=[^bptcçxdrzjsşfñllmhvyqkgnğ])[aeéiouöü] (ont type)
-        # (?<=[^bptcçxdrzjsşfñllmhvyqkgnğ]|^)[aeéiouöü]
-
-        # Add a "U+0626" before a vowel if it is the beginning of a word or after a vowel
+        text = re.sub(r'(?<=[^bptcçxdrzjsşfñllmhvyqkgnğ]|^)[aeéiouöü]', lambda m: u'\u0626' + m.group(), text)
+        # add a "U+0626" before a vowel if it is the beginning of a word or after a vowel but not at the end of the word
         # for example
         # "ait" -> "U+0626aU+0626it" ئائىت
-        # Threre is special case cuñxua which should not be converted to cuñxu'a as it is written in UAS as  جۇڭخۇا
-        # We ignore this special case.
-
-        if not self.less_apostrophe:
-            text = re.sub(r'(?<=[^aebptcçxdrzjsşfñllamhouöüvéiyqkgnğ]|^)[aeéiouöü]',
-                          lambda m: u'\u0626' + m.group(), text)
-
-            def sub(m):
-                return m.group(0)[0] + m.group(0)[2]
-
-            text = re.sub(r'[aebptcçxdrzjsşfñllamhouöüvéiyqkgnğ\u0626](\')[aebptcçxdrzjsşfñllamhouöüvéiyqkgnğ\u0626]',
-                          sub, text)
-
-            text = self._repalce_via_table(text, self.__cts_group1, self.__uas_group1)
-        else:
-            text = re.sub(r'(?<=[^bptcçxdrzjsşfñllmhvyqkgnğ]|^)[aeéiouöü]', lambda m: u'\u0626' + m.group(), text)
-            # add a "U+0626" before a vowel if it is the beginning of a word or after a vowel but not at the end of the word
-            # for example
-            # "ait" -> "U+0626aU+0626it" ئائىت
-            # cuñxua -> cuñxua. cuñxu'a is wrong جۇڭخۇا
-            # text = re.sub(r'(?<=[^bptcçxdrzjsşfñllmhvyqkgnğ]|^)[aeéiouöü](?=[aebptcçxdrzjsşfñllamhouöüvéiyqkgnğ])',
-            #               lambda m: u'\u0626' + m.group(), text)
-            text = self._repalce_via_table(text, self.__cts_group1, self.__uas_group1)
-            # replace "'\u0626" with ""
-            text = text.replace(u"'\u0626", '')
-            # text = self._revise_UAS(text)
+        # cuñxua -> cuñxua. cuñxu'a is wrong جۇڭخۇا
+        text = self._repalce_via_table(text, self.__cts_group1, self.__uas_group1)
+        # replace "'\u0626" with ""
+        text = text.replace(u"'", '')
+        text = self._revise_UAS(text)
         return text
 
     def _revise_UAS(self, text):
         return re.sub(r"(^|-|\s|[اەېىوۇۆۈ])([اەېىوۇۆۈ])", lambda m: m.group(1) + "ئ" + m.group(2), text)
 
-    def convertCTS2ULS(self, text):
+    def CTS2ULS(self, text):
         text = text.lower()
         text = text.replace(u'ng', u"n'g") \
             .replace(u'sh', u"s'h") \
@@ -296,23 +213,7 @@ class UgMultiScriptConverter:
             .replace(u"v", u'w')
         return text
 
-    # def convertCTS2UYS(self, text):
-    #     text = text.lower()
-    #     # don't modify the the @ sign
-    #     text = text.replace(u'ng', u"n'g")\
-    #         .replace(u'ñ', u"ng")\
-    #         .replace(u'ç', u'@h')\
-    #         .replace(u'j', u'zh') \
-    #         .replace(u'ş', u'sh')\
-    #         .replace(u"nğ", u"n'gh")\
-    #         .replace(u"ğ", u'gh')\
-    #         .replace(u"v", u'w')\
-    #         .replace(u"ñ", u'ng') \
-    #         .replace(u"c", u'j')\
-    #         .replace(u'@', u'c')
-    #     return text
-
-    def convertCTS2UYS(self, text):
+    def CTS2UYS(self, text):
         text = text.lower()
         text = text.replace(u'ng', u"n'g") \
             .replace(u"e", u'ə') \
@@ -330,7 +231,7 @@ class UgMultiScriptConverter:
             .replace(u'ğ', u"ƣ")
         return text
 
-    def convertCTS2UZBEK(self, text):
+    def CTS2UZBEK(self, text):
         text = text.lower()
         text = text.replace(u"e", u'a') \
             .replace(u'j', u"j") \
@@ -344,8 +245,7 @@ class UgMultiScriptConverter:
             .replace(u'ğ', u"gʻ")
         return text
 
-
-    def convertCTS2UCS(self, text):
+    def CTS2UCS(self, text):
         text = text.lower()
         text = text.replace("ya", "я").replace("yu", "ю")
         text = self._repalce_via_table(text, self.__cts_group1, self.__ucs_group1)
@@ -354,7 +254,7 @@ class UgMultiScriptConverter:
 
     # ----------------------------------------------
     # Uyghur Latin script to target script
-    def convertULS2UAS(self, text):
+    def ULS2UAS(self, text):
         """
         ULS to UAS
         Parameters
@@ -365,9 +265,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UAS(self.convertULS2CTS(text))
+        return self.CTS2UAS(self.ULS2CTS(text))
 
-    def convertULS2UCS(self, text):
+    def ULS2UCS(self, text):
         """
         ULS to UCS
         Parameters
@@ -378,9 +278,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UCS(self.convertULS2CTS(text))
+        return self.CTS2UCS(self.ULS2CTS(text))
 
-    def convertULS2UYS(self, text):
+    def ULS2UYS(self, text):
         """
         ULS to UCS
         Parameters
@@ -391,12 +291,12 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UYS(self.convertULS2CTS(text))
+        return self.CTS2UYS(self.ULS2CTS(text))
 
     # ----------------------------------------------
     # Uyghur Arabic script to target script
 
-    def convertUAS2ULS(self, text):
+    def UAS2ULS(self, text):
         """
         UAS to ULS
         Parameters
@@ -407,9 +307,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2ULS(self.convertUAS2CTS(text))
+        return self.CTS2ULS(self.UAS2CTS(text, True))
 
-    def convertUAS2UCS(self, text):
+    def UAS2UCS(self, text):
         """
         UAS to CCS
         Parameters
@@ -420,9 +320,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UCS(self.convertUAS2CTS(text))
+        return self.CTS2UCS(self.UAS2CTS(text, True))
 
-    def convertUAS2UYS(self, text):
+    def UAS2UYS(self, text):
         """
         UAS to UYS
         Parameters
@@ -433,12 +333,12 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UYS(self.convertUAS2CTS(text))
+        return self.CTS2UYS(self.UAS2CTS(text, True))
 
     # ----------------------------------------------
     # Uyghur Cyrillic script to target script
 
-    def convertUCS2UAS(self, text):
+    def UCS2UAS(self, text):
         """
         UCS to UAS
         Parameters
@@ -449,9 +349,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UAS(self.convertUCS2CTS(text))
+        return self.CTS2UAS(self.UCS2CTS(text))
 
-    def convertUCS2ULS(self, text):
+    def UCS2ULS(self, text):
         """
         UCS to ULS
         Parameters
@@ -462,9 +362,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2ULS(self.convertUCS2CTS(text))
+        return self.CTS2ULS(self.UCS2CTS(text))
 
-    def convertUCS2ULS(self, text):
+    def UCS2ULS(self, text):
         """
         UCS to ULS
         Parameters
@@ -475,9 +375,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2ULS(self.convertUCS2CTS(text))
+        return self.CTS2ULS(self.UCS2CTS(text))
 
-    def convertUCS2UYS(self, text):
+    def UCS2UYS(self, text):
         """
         UCS to UYS
         Parameters
@@ -488,12 +388,12 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UYS(self.convertUCS2CTS(text))
+        return self.CTS2UYS(self.UCS2CTS(text))
 
     # ----------------------------------------------
     # Uyghur Yengi script to target script
 
-    def convertUYS2UAS(self, text):
+    def UYS2UAS(self, text):
         """
         UYS to UAS
         Parameters
@@ -504,9 +404,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UAS(self.convertUYS2CTS(text))
+        return self.CTS2UAS(self.UYS2CTS(text))
 
-    def convertUYS2ULS(self, text):
+    def UYS2ULS(self, text):
         """
         UYS to ULS
         Parameters
@@ -517,9 +417,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2ULS(self.convertUYS2CTS(text))
+        return self.CTS2ULS(self.UYS2CTS(text))
 
-    def convertUYS2UCS(self, text):
+    def UYS2UCS(self, text):
         """
         UYS to UCS
         Parameters
@@ -530,9 +430,9 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UCS(self.convertUYS2CTS(text))
+        return self.CTS2UCS(self.UYS2CTS(text))
 
-    def convertUAStoUZBEK(self, text):
+    def UAStoUZBEK(self, text):
         """
         UAS to UZBEK
         Parameters
@@ -543,7 +443,7 @@ class UgMultiScriptConverter:
         -------
 
         """
-        return self.convertCTS2UZBEK(self.convertUAS2CTS(text))
+        return self.CTS2UZBEK(self.UAS2CTS(text, True))
 
 
 def args_parser():
@@ -552,7 +452,7 @@ def args_parser():
     parser.add_argument('-t', '--target', help='target script', required=True)
     parser.add_argument('-i', '--input', help='input file', required=True)
     parser.add_argument('-o', '--output', help='output file', required=True)
-    parser.add_argument('--la', action='store_true', default=False, help='Removing apostrophe between vowels', required=False)
+    # parser.add_argument('--la', action='store_true', default=False, help='Removing apostrophe between vowels', required=False)
     args = parser.parse_args()
     return args
 
@@ -562,7 +462,7 @@ if __name__ == "__main__":
     with open(args.input, 'r') as f:
         text = f.read()
 
-    converter = UgMultiScriptConverter(args.source, args.target, less_apostrophe=args.apostrophe)
+    converter = UgMultiScriptConverter(args.source, args.target)
     text = converter(text)
     with open(args.output, 'w') as f:
         f.write(text)
