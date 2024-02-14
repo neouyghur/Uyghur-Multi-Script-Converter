@@ -21,6 +21,7 @@ UAS | Uyghur Arabic Script
 CTS |Common Turkic Script
 UCS | Uyghur Cyrillic Script
 XJU | Xinjinag University English Case Sensitive
+UZBEK | Uzbek
 
 '''
 import regex as re
@@ -33,23 +34,25 @@ class UgMultiScriptConverter:
         self.target_script = target_script
         # self.less_apostrophe = less_apostrophe
 
-        self.__uas_group1 = [u'ا', u'ە', u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د', u'ر', u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ',
-                        u'ل', u'لا', u'م', u'ھ', u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك', u'گ', u'ن',
-                        u'غ', u'؟', u'،', u'؛', u'٭']  # u'ئ',
+        self.__uas_group1 = [u'ا', u'ە', u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د', u'ر',
+                             u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ',u'ل', u'لا', u'م', u'ھ',
+                             u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك',
+                             u'گ', u'ن', u'غ', u'؟', u'،', u'؛', u'٭']  # u'ئ',
         # following may be not necessary, u'«', u'«', u'«', u'«', u'»', u'»', u'»', u'»']
-        self.__cts_group1 = [u'a', u'e', u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r', u'z', u'j', u's', u'ş', u'f', u'ñ',
-                        u'l', u'la', u'm', u'h', u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k', u'g', u'n',
-                        u'ğ', u'?', u',', u';', u'*']
-        self.__ucs_group1 = [u'а', u'ә', u'б', u'п', u'т', u'җ', u'ч', u'х', u'д', u'р', u'з', u'ж', u'с', u'ш', u'ф', u'ң',
-                        u'л', u'ла', u'м', u'һ', u'о', u'у', u'ө', u'ү', u'в', u'е', u'и', u'й', u'қ', u'к', u'г', u'н',
-                        u'ғ', u'?', u',', u';', u'*']
+        self.__cts_group1 = [u'a', u'e', u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r',
+                             u'z', u'j', u's', u'ş', u'f', u'ñ',u'l', u'la', u'm', u'h',
+                             u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k',
+                             u'g', u'n', u'ğ', u'?', u',', u';', u'*']
+        self.__ucs_group1 = [u'а', u'ә', u'б', u'п', u'т', u'җ', u'ч', u'х', u'д', u'р',
+                             u'з', u'ж', u'с', u'ш', u'ф', u'ң',u'л', u'ла', u'м', u'һ',
+                             u'о', u'у', u'ө', u'ү', u'в', u'е', u'и', u'й', u'қ', u'к',
+                             u'г', u'н', u'ғ', u'?', u',', u';', u'*']
 
         # I have to improve this. It is not complete
-        # Self.__api_groupd1 = ["ɑ", "æ", "b", "p", "t", "Ǯ", "/t͡ʃ/", "/χ/", "/d/", "/r/", "/z/", "/ʒ/",
-        #                       "/s/", "/ʃ/", "/f/", "/ŋ/", "/l/", "/m/", "/h/", "/o/",
-        #     "/u/", "/ø/", "/y/", "/w/", "/ɛ/", "/i/", "/j/", "/q/", "/k/", "/ɡ/",
-        #     "/n/", "/ʁ/"
-        # ]
+        self.__ipa_group1 = ["ɑ", "æ", "b", "p", "t", "dʒ", "tʃ", "χ", "d", "r",
+                             "z", "ʒ", "s", "ʃ", "f", "ŋ", "l", "la", "m", "h",
+                             "o", "u", "ø", "y", "w", "ɛ", "i", "j", "q", "k",
+                             "ɡ", "n", "ʁ", u'?', u',', u';', u'*']
 
     def __call__(self, text, source_script=None, target_script=None):
         if source_script:
@@ -166,6 +169,40 @@ class UgMultiScriptConverter:
         text = text.replace("я", "ya").replace("ю", "yu")
         return text
 
+    def XJUS2CTS(self, text):
+        text = text.replace('v', "\u0626") \
+            .replace(u'J', u"j") \
+            .replace(u'c', u"ç") \
+            .replace(u'j', u"c") \
+            .replace(u'x', u"ş") \
+            .replace(u'H', u"x") \
+            .replace(u'N', u"ñ") \
+            .replace(u'O', u"ö") \
+            .replace(u'U', u"ü") \
+            .replace(u'e', u"é") \
+            .replace(u"A", u'e') \
+            .replace(u'G', u"ğ") \
+            .replace(u'w', u"v")
+        text = self.__revise_CTS(text, False)
+        return text
+
+    def UZBEK2CTS(self, text):
+        text = text.replace(u'ch', u'ç') \
+            .replace('sh', u'ş') \
+            .replace("s'h", 'sh') \
+            .replace('ng', u"ñ") \
+            .replace("n'g", 'ng') \
+            .replace(u"g‘", u'ğ') \
+            .replace("o‘", u"ö") \
+            .replace("u‘", u"ü") \
+            .replace("e", u"é") \
+            .replace('a', 'e') \
+            .replace(u'o', 'a') \
+            .replace(u'j', 'c')
+        text = self.__revise_CTS(text, False)
+        return text
+
+
     # ----------------------------------------------
     # Common turkic script to target script
 
@@ -181,7 +218,7 @@ class UgMultiScriptConverter:
           text
         """
 
-        text = re.sub(r'(?<=[^bptcçxdrzjsşfñllmhvyqkgnğ]|^)[aeéiouöü]', lambda m: u'\u0626' + m.group(), text)
+        text = re.sub(r'(?<=[^bptcçxdrzjsşfñlmhvyqkgnğ]|^)[aeéiouöü]', lambda m: u'\u0626' + m.group(), text)
         # add a "U+0626" before a vowel if it is the beginning of a word or after a vowel but not at the end of the word
         # for example
         # "ait" -> "U+0626aU+0626it" ئائىت
@@ -231,18 +268,47 @@ class UgMultiScriptConverter:
             .replace(u'ğ', u"ƣ")
         return text
 
+    def CTS2IPA(self, text):
+        position = self.__ipa_group1.index('y')
+        self.__cts_group1 = self.__cts_group1[:position] + self.__cts_group1[position+1:]
+        self.__ipa_group1 = self.__ipa_group1[:position] + self.__ipa_group1[position + 1:]
+
+        text = self._repalce_via_table(text, self.__cts_group1, self.__ipa_group1)
+        text = text.replace('ü', 'y')
+        return text
+
     def CTS2UZBEK(self, text):
         text = text.lower()
-        text = text.replace(u"e", u'a') \
-            .replace(u'j', u"j") \
+        text = text.replace(u"a", u'o')\
+            .replace(u"e", u'a') \
             .replace(u'c', u"j") \
             .replace(u'q', u"q") \
             .replace(u'ç', u"ch") \
             .replace(u'ş', u"sh") \
             .replace(u'ñ', u"ng") \
-            .replace(u'ö', u"oʻ") \
+            .replace(u'ö', u"o‘") \
+            .replace(u'ü', u"u‘") \
             .replace(u'é', u"e") \
-            .replace(u'ğ', u"gʻ")
+            .replace(u'ğ', u"g‘")
+        return text
+
+    def CTS2XJUS(self, text):
+        text = text.lower()
+        text = text.replace(u"e", u'A') \
+            .replace(u'x', u"H") \
+            .replace(u'j', u"J") \
+            .replace(u'c', u"j") \
+            .replace(u'ç', u"c") \
+            .replace(u'ş', u"x") \
+            .replace(u'ñ', u"N") \
+            .replace(u'ö', u"O") \
+            .replace(u'ü', u"U") \
+            .replace(u'é', u"e") \
+            .replace(u'ğ', u"G") \
+            .replace(u'v', u"w")
+
+        text = re.sub(r'(?<=[^bptcxdrzjJsxfNlmhHyqkgnGw]|^)[aAeiouOU]', lambda m: 'v'+ m.group(), text)
+        text = text.replace(u"'", '')
         return text
 
     def CTS2UCS(self, text):
@@ -255,194 +321,54 @@ class UgMultiScriptConverter:
     # ----------------------------------------------
     # Uyghur Latin script to target script
     def ULS2UAS(self, text):
-        """
-        ULS to UAS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UAS(self.ULS2CTS(text))
 
     def ULS2UCS(self, text):
-        """
-        ULS to UCS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UCS(self.ULS2CTS(text))
 
     def ULS2UYS(self, text):
-        """
-        ULS to UCS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UYS(self.ULS2CTS(text))
 
     # ----------------------------------------------
     # Uyghur Arabic script to target script
 
     def UAS2ULS(self, text):
-        """
-        UAS to ULS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2ULS(self.UAS2CTS(text, True))
 
     def UAS2UCS(self, text):
-        """
-        UAS to CCS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UCS(self.UAS2CTS(text, True))
 
     def UAS2UYS(self, text):
-        """
-        UAS to UYS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UYS(self.UAS2CTS(text, True))
 
     # ----------------------------------------------
     # Uyghur Cyrillic script to target script
 
     def UCS2UAS(self, text):
-        """
-        UCS to UAS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UAS(self.UCS2CTS(text))
 
     def UCS2ULS(self, text):
-        """
-        UCS to ULS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2ULS(self.UCS2CTS(text))
 
     def UCS2ULS(self, text):
-        """
-        UCS to ULS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2ULS(self.UCS2CTS(text))
 
     def UCS2UYS(self, text):
-        """
-        UCS to UYS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UYS(self.UCS2CTS(text))
 
     # ----------------------------------------------
     # Uyghur Yengi script to target script
 
     def UYS2UAS(self, text):
-        """
-        UYS to UAS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UAS(self.UYS2CTS(text))
 
     def UYS2ULS(self, text):
-        """
-        UYS to ULS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2ULS(self.UYS2CTS(text))
 
     def UYS2UCS(self, text):
-        """
-        UYS to UCS
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UCS(self.UYS2CTS(text))
 
     def UAStoUZBEK(self, text):
-        """
-        UAS to UZBEK
-        Parameters
-        ----------
-        text
-
-        Returns
-        -------
-
-        """
         return self.CTS2UZBEK(self.UAS2CTS(text, True))
 
 

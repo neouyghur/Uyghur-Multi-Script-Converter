@@ -1,0 +1,61 @@
+from umsc.umsc import UgMultiScriptConverter
+import pytest
+
+# Pair each input with its expected output
+test_data = [
+    ('qol', 'qol'),
+    ('baş', 'bɑʃ'),
+    ('put', 'put'),
+    ('köz', 'køz'),
+    ('ceñçi', 'dʒæŋtʃi'),
+    ('cudé', 'dʒudɛ'),
+    ('san', 'sɑn'),
+    ('sey', 'sæj'),
+    ('é', 'ɛ'),
+    ('şir', 'ʃir'),
+    ('şañxey', 'ʃɑŋχæj'),
+    ('kitab', 'kitɑb'),
+    ('veten', 'wætæn'),
+    ('tomur', 'tomur'),
+    ('kömür', 'kømyr'),
+    ('éliktir', 'ɛliktir'),
+    ('vyétnam', 'wjɛtnɑm'),
+    ('şincañ', 'ʃindʒɑŋ'),
+    ('anar', 'ɑnɑr'),
+    ('encür', 'ændʒyr'),
+    ('orda', 'ordɑ'),
+    ('uruş', 'uruʃ'),
+    ('ördek', 'ørdæk'),
+    ('üzüm', 'yzym'),
+    ('élan', 'ɛlɑn'),
+    ('inkas', 'inkɑs'),
+    ("inik'ana", "inik'ɑnɑ"),
+    ("es'et", "æs'æt"),
+    ('radio', 'rɑdio'),
+    ("mes'ul", "mæs'ul"),
+    ('qariörük', 'qɑriøryk'),
+    ('naümid', 'nɑymid'),
+    ("it'éyiq", "it'ɛjiq"),
+    ("cem'iy", "dʒæm'ij"),
+    ('nemengan', 'næmænɡɑn'),
+    ('özxan', 'øzχɑn'),
+    ('pasxa', 'pɑsχɑ'),
+    ('bayrimi', 'bɑjrimi'),
+    ('maarip', 'mɑɑrip'),
+    ('muellim', 'muællim'),
+    ('daire', 'dɑiræ'),
+    ('mueyyen', 'muæjjæn'),
+    ('tebiiy', 'tæbiij'),
+    ('paaliyet', 'pɑɑlijæt'),
+    ('ishaq', 'ishɑq'),
+    ('özbékistanğa', 'øzbɛkistɑnʁɑ'),
+    ('hingan', 'hinɡɑn'),
+    ('çeklengen', 'tʃæklænɡæn'),
+    ('gañgirap', 'ɡɑŋɡirɑp'),
+    ('başlanğuç', 'bɑʃlɑnʁutʃ'),
+    ("cem'iyet", "dʒæm'ijæt")
+]
+@pytest.mark.parametrize("input,expected", test_data)
+def test_CTS2UAS(input, expected):
+    converter = UgMultiScriptConverter("CTS", "IPA")
+    assert converter(input) == expected
