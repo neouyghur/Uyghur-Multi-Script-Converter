@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='umsc',
-    version='0.1.0',
+    version='0.2.0',
     author='Osman Tursun',
     author_email='osmanjan.t@gmail.com',
     maintainer='Osman Tursun',
@@ -10,7 +10,7 @@ setup(
     description='Script Converter for Uyghur Language',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    keywords='uyghur script converter arabic latin cyrillic',
+    keywords='uyghur script converter arabic latin cyrillic IPA ئۇيغۇر',
     url='https://github.com/neouyghur/ScriptConverter4Uyghur',
     packages=find_packages(),
     install_requires=[
