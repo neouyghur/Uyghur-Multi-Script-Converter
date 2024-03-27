@@ -1,7 +1,7 @@
 # Script Converter for Uyghur Language
 This converter converts multiple Uyghur scripts such as **ULS** (Uyghur Latin Script), **UAS** (Uyghur Arabic Script), 
 **CTS** (Common Turkish Script), **UCS** (Uyghur Cyrillic Script), **UYS** (Uyghur Yengi (new) Script), 
-International Phonetic Alphabet (IPA), Uzbek and Xinjiang University Script (XJUS).
+International Phonetic Alphabet (IPA), Uzbek Latin Script (UZLS) and Xinjiang University Script (XJUS).
 
 ## Installation
 ```
@@ -10,7 +10,7 @@ pip install umsc
 
 
 ## Mapping table
-| UAS | CTS | ULS| UCS|UYS| IPA   | Uzbek | XJUS |
+| UAS | CTS | ULS| UCS|UYS| IPA   | UZLS | XJUS |
 |-----|----| ---- | --- | -- |-------|---|------|
 | ا   | a  | a    | а   |a | /ɑ/   | o | a    |
 | ە   | e  | e    | ә   |ə | /æ/   | a | A    |
@@ -56,12 +56,30 @@ Review the files in the tests directory for examples of converting between diffe
 
 ```
 from umsc import UgMultiScriptConverter
+# To convert text, you need to define source and target scripts
+# The abbreviation of scrips
+# ULS | Uyghur Latin Script
+# UYS | Uyghur Yengi (New) Script
+# CPS | Chinese Pinyin Script
+# UAS | Uyghur Arabic Script
+# CTS |Common Turkic Script
+# UCS | Uyghur Cyrillic Script
+# XJU | Xinjinag University English Case Sensitive
+# UZLS | Uzbek Latin Script
+# Convert Uyghur Arabic Script to Uyghur Latin Script
 source_script = 'UAS'
 target_script = 'ULS'
 converter = UgMultiScriptConverter(source_script, target_script)
-text = 'ياخشىمۇسىز!'
-text = converter(text)
-print(text)
+text1 = 'ياخشىمۇسىز!'
+text1 = converter(text1)
+print(text1)
+# Convert Uyghur Latin Script to Uyghur Arabic Script
+source_script = 'ULS'
+target_script = 'UAS'
+converter = UgMultiScriptConverter(source_script, target_script)
+text2 = 'yaxshimusiz!'
+text2 = converter(text2)
+print(text2)
 ```
 
 ## Notes

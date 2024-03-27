@@ -21,7 +21,7 @@ UAS | Uyghur Arabic Script
 CTS |Common Turkic Script
 UCS | Uyghur Cyrillic Script
 XJU | Xinjinag University English Case Sensitive
-UZBEK | Uzbek
+UZLS | Uzbek Latin Script
 
 '''
 import regex as re
@@ -186,7 +186,7 @@ class UgMultiScriptConverter:
         text = self.__revise_CTS(text, False)
         return text
 
-    def UZBEK2CTS(self, text):
+    def UZLS2CTS(self, text):
         text = text.replace(u'ch', u'ç') \
             .replace('sh', u'ş') \
             .replace("s'h", 'sh') \
@@ -277,7 +277,7 @@ class UgMultiScriptConverter:
         text = text.replace('ü', 'y')
         return text
 
-    def CTS2UZBEK(self, text):
+    def CTS2UZLS(self, text):
         text = text.lower()
         text = text.replace(u"a", u'o')\
             .replace(u"e", u'a') \
@@ -368,8 +368,8 @@ class UgMultiScriptConverter:
     def UYS2UCS(self, text):
         return self.CTS2UCS(self.UYS2CTS(text))
 
-    def UAStoUZBEK(self, text):
-        return self.CTS2UZBEK(self.UAS2CTS(text, True))
+    def UAStoUZLS(self, text):
+        return self.CTS2UZLS(self.UAS2CTS(text, True))
 
 
 def args_parser():
