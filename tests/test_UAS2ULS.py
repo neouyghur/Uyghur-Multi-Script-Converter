@@ -55,6 +55,7 @@ test_data = [
     ("باشلانغۇچ", "bashlan'ghuch"),
     ("جەمئىيەت", "jem'iyet"),
     ("جۇڭخۇا", "jungxua"),
+    ("ئەدەب-ئەخلاق", "edeb-exlaq"),
 ]
 
 @pytest.mark.parametrize("input,expected", test_data)

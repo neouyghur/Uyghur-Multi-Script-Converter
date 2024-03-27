@@ -118,8 +118,8 @@ class UgMultiScriptConverter:
         -------
 
         """
-        # Remove a "U+0626" if it is a beginning of a word
-        text = re.sub(r'(\s|^)(\u0626)(\w+)', lambda m: m.group(1) + m.group(3), text)
+        # Remove a "U+0626" if it is a beginning of a word, if it is not after a alphabet in CTS
+        text = re.sub(r'(?<=[^aeuoöübptcçxdzrjsşfñlmhvéiyqkgnğ]|^)\u0626', '', text)
         # Replace a "U+0626" with "'" if "U+0626" is appeared in a word and its previous character is not in
         # [u'a', u'e', u'é', u'i', u'o', u'u', u'ö', u'ü']
         if not keep_apostrophes:
