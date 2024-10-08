@@ -14,6 +14,7 @@ setup(
     url='https://github.com/neouyghur/ScriptConverter4Uyghur',
     packages=find_packages(),
     install_requires=[
+        "regex"
     ],
     classifiers=[
         # Trove classifiers to categorize the package (https://pypi.org/classifiers/)
