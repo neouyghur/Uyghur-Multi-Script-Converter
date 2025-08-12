@@ -35,16 +35,16 @@ class UgMultiScriptConverter:
         # self.less_apostrophe = less_apostrophe
 
         self.__uas_group1 = [u'ا', u'ە', u'ب', u'پ', u'ت', u'ج', u'چ', u'خ', u'د', u'ر',
-                             u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ',u'ل', u'لا', u'م', u'ھ',
+                             u'ز', u'ژ', u'س', u'ش', u'ف', u'ڭ', u'ل', u'لا', u'م', u'ھ',
                              u'و', u'ۇ', u'ۆ', u'ۈ', u'ۋ', u'ې', u'ى', u'ي', u'ق', u'ك',
                              u'گ', u'ن', u'غ', u'؟', u'،', u'؛', u'٭']  # u'ئ',
         # following may be not necessary, u'«', u'«', u'«', u'«', u'»', u'»', u'»', u'»']
         self.__cts_group1 = [u'a', u'e', u'b', u'p', u't', u'c', u'ç', u'x', u'd', u'r',
-                             u'z', u'j', u's', u'ş', u'f', u'ñ',u'l', u'la', u'm', u'h',
+                             u'z', u'j', u's', u'ş', u'f', u'ñ', u'l', u'la', u'm', u'h',
                              u'o', u'u', u'ö', u'ü', u'v', u'é', u'i', u'y', u'q', u'k',
                              u'g', u'n', u'ğ', u'?', u',', u';', u'*']
         self.__ucs_group1 = [u'а', u'ә', u'б', u'п', u'т', u'җ', u'ч', u'х', u'д', u'р',
-                             u'з', u'ж', u'с', u'ш', u'ф', u'ң',u'л', u'ла', u'м', u'һ',
+                             u'з', u'ж', u'с', u'ш', u'ф', u'ң', u'л', u'ла', u'м', u'һ',
                              u'о', u'у', u'ө', u'ү', u'в', u'е', u'и', u'й', u'қ', u'к',
                              u'г', u'н', u'ғ', u'?', u',', u';', u'*']
 
@@ -67,7 +67,7 @@ class UgMultiScriptConverter:
         # If source and target are same, then return original text
         if self.target_script == self.source_script:
             return text  # No conversion needed
-        
+
         method_name = f'{self.source_script}2{self.target_script}'
 
         convert_method = getattr(self, method_name, None)
@@ -75,7 +75,8 @@ class UgMultiScriptConverter:
         if convert_method:
             return convert_method(text)
         else:
-            raise ValueError(f'Conversion from {self.source_script} to {self.target_script} not supported')
+            raise ValueError(
+                f'Conversion from {self.source_script} to {self.target_script} not supported')
 
     def isPureUyghurScript(herp):
         m = re.search('[\u0621-\u06ff]', herp)
@@ -102,7 +103,8 @@ class UgMultiScriptConverter:
         -------
         text
         """
-        text = self._repalce_via_table(text, self.__uas_group1, self.__cts_group1)
+        text = self._repalce_via_table(
+            text, self.__uas_group1, self.__cts_group1)
         text = self.__revise_CTS(text, keep_apstrophe)
         return text
 
@@ -119,11 +121,13 @@ class UgMultiScriptConverter:
 
         """
         # Remove a "U+0626" if it is a beginning of a word, if it is not after a alphabet in CTS
-        text = re.sub(r'(?<=[^aeuoöübptcçxdzrjsşfñlmhvéiyqkgnğ]|^)\u0626', '', text)
+        text = re.sub(
+            r'(?<=[^aeuoöübptcçxdzrjsşfñlmhvéiyqkgnğ]|^)\u0626', '', text)
         # Replace a "U+0626" with "'" if "U+0626" is appeared in a word and its previous character is not in
         # [u'a', u'e', u'é', u'i', u'o', u'u', u'ö', u'ü']
         if not keep_apostrophes:
-            text = re.sub(r'(([aeéiouöü])\u0626)', lambda m: m.group()[0], text)
+            text = re.sub(r'(([aeéiouöü])\u0626)',
+                          lambda m: m.group()[0], text)
         text = text.replace('\u0626', u"'")
         return text
 
@@ -165,7 +169,8 @@ class UgMultiScriptConverter:
 
     def UCS2CTS(self, text):
         text = text.lower()
-        text = self._repalce_via_table(text, self.__ucs_group1, self.__cts_group1)
+        text = self._repalce_via_table(
+            text, self.__ucs_group1, self.__cts_group1)
         text = text.replace("я", "ya").replace("ю", "yu")
         return text
 
@@ -186,6 +191,23 @@ class UgMultiScriptConverter:
         text = self.__revise_CTS(text, False)
         return text
 
+    def XJUS2UAS(self, text):
+        text = text.replace('v', "\u0626") \
+            .replace(u'J', u"j") \
+            .replace(u'c', u"ç") \
+            .replace(u'j', u"c") \
+            .replace(u'x', u"ş") \
+            .replace(u'H', u"x") \
+            .replace(u'N', u"ñ") \
+            .replace(u'O', u"ö") \
+            .replace(u'U', u"ü") \
+            .replace(u'e', u"é") \
+            .replace(u"A", u'e') \
+            .replace(u'G', u"ğ") \
+            .replace(u'w', u"v")
+        text = self.CTS2UAS(self.__revise_CTS(text, False))
+        return text
+
     def UZLS2CTS(self, text):
         text = text.replace(u'ch', u'ç') \
             .replace('sh', u'ş') \
@@ -202,7 +224,6 @@ class UgMultiScriptConverter:
         text = self.__revise_CTS(text, False)
         return text
 
-
     # ----------------------------------------------
     # Common turkic script to target script
 
@@ -218,12 +239,14 @@ class UgMultiScriptConverter:
           text
         """
 
-        text = re.sub(r'(?<=[^bptcçxdrzjsşfñlmhvyqkgnğ]|^)[aeéiouöü]', lambda m: u'\u0626' + m.group(), text)
+        text = re.sub(r'(?<=[^bptcçxdrzjsşfñlmhvyqkgnğ]|^)[aeéiouöü]',
+                      lambda m: u'\u0626' + m.group(), text)
         # add a "U+0626" before a vowel if it is the beginning of a word or after a vowel but not at the end of the word
         # for example
         # "ait" -> "U+0626aU+0626it" ئائىت
         # cuñxua -> cuñxua. cuñxu'a is wrong جۇڭخۇا
-        text = self._repalce_via_table(text, self.__cts_group1, self.__uas_group1)
+        text = self._repalce_via_table(
+            text, self.__cts_group1, self.__uas_group1)
         # replace "'\u0626" with ""
         text = text.replace(u"'", '')
         text = self._revise_UAS(text)
@@ -270,10 +293,13 @@ class UgMultiScriptConverter:
 
     def CTS2IPA(self, text):
         position = self.__ipa_group1.index('y')
-        self.__cts_group1 = self.__cts_group1[:position] + self.__cts_group1[position+1:]
-        self.__ipa_group1 = self.__ipa_group1[:position] + self.__ipa_group1[position + 1:]
+        self.__cts_group1 = self.__cts_group1[:position] + \
+            self.__cts_group1[position+1:]
+        self.__ipa_group1 = self.__ipa_group1[:position] + \
+            self.__ipa_group1[position + 1:]
 
-        text = self._repalce_via_table(text, self.__cts_group1, self.__ipa_group1)
+        text = self._repalce_via_table(
+            text, self.__cts_group1, self.__ipa_group1)
         text = text.replace('ü', 'y')
         return text
 
@@ -307,14 +333,16 @@ class UgMultiScriptConverter:
             .replace(u'ğ', u"G") \
             .replace(u'v', u"w")
 
-        text = re.sub(r'(?<=[^bptcxdrzjJsxfNlmhHyqkgnGw]|^)[aAeiouOU]', lambda m: 'v'+ m.group(), text)
+        text = re.sub(
+            r'(?<=[^bptcxdrzjJsxfNlmhHyqkgnGw]|^)[aAeiouOU]', lambda m: 'v' + m.group(), text)
         text = text.replace(u"'", '')
         return text
 
     def CTS2UCS(self, text):
         text = text.lower()
         text = text.replace("ya", "я").replace("yu", "ю")
-        text = self._repalce_via_table(text, self.__cts_group1, self.__ucs_group1)
+        text = self._repalce_via_table(
+            text, self.__cts_group1, self.__ucs_group1)
         # return text.replace("'", "")
         return text
 
@@ -373,7 +401,8 @@ class UgMultiScriptConverter:
 
 
 def args_parser():
-    parser = argparse.ArgumentParser(description='Convert text from one script to another')
+    parser = argparse.ArgumentParser(
+        description='Convert text from one script to another')
     parser.add_argument('-s', '--source', help='source script', required=True)
     parser.add_argument('-t', '--target', help='target script', required=True)
     parser.add_argument('-i', '--input', help='input file', required=True)
@@ -381,6 +410,7 @@ def args_parser():
     # parser.add_argument('--la', action='store_true', default=False, help='Removing apostrophe between vowels', required=False)
     args = parser.parse_args()
     return args
+
 
 if __name__ == "__main__":
     args = args_parser()
