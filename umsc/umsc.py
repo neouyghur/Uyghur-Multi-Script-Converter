@@ -193,9 +193,9 @@ class UgMultiScriptConverter:
 
     def XJUS2UAS(self, text):
         text = text.replace('v', "\u0626") \
-            .replace(u'J', u"j") \
             .replace(u'c', u"ç") \
             .replace(u'j', u"c") \
+            .replace(u'J', u"j") \
             .replace(u'x', u"ş") \
             .replace(u'H', u"x") \
             .replace(u'N', u"ñ") \

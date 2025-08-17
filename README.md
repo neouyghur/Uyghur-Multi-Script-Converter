@@ -1,7 +1,13 @@
 # Script Converter for Uyghur Language
-This converter converts multiple Uyghur scripts such as **ULS** (Uyghur Latin Script), **UAS** (Uyghur Arabic Script), 
-**CTS** (Common Turkish Script), **UCS** (Uyghur Cyrillic Script), **UYS** (Uyghur Yengi (new) Script), 
-International Phonetic Alphabet (IPA), Uzbek Latin Script (UZLS) and Xinjiang University Script (XJUS).
+This converter supports multiple Uyghur writing systems:
+- **ULS** — Uyghur Latin Script  
+- **UAS** — Uyghur Arabic Script  
+- **CTS** — Common Turkish Script  
+- **UCS** — Uyghur Cyrillic Script  
+- **UYS** — Uyghur Yengi (New) Script  
+- **IPA** — International Phonetic Alphabet  
+- **UZLS** — Uzbek Latin Script  
+- **XJUS** — Xinjiang University Script  
 
 ## Installation
 ```

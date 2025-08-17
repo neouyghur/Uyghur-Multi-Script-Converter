@@ -56,5 +56,5 @@ test_data = [('qol', 'qal'),
 
 @pytest.mark.parametrize("input,expected", test_data)
 def test_UAS2CTS(input, expected):
-    converter = UgMultiScriptConverter("UZBEK", "CTS")
+    converter = UgMultiScriptConverter("UZLS", "CTS")
     assert converter(input) == expected
