@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='umsc',
-    version='0.2.0',
+    version='0.4.0',
     author='Osman Tursun',
     author_email='osmanjan.t@gmail.com',
     maintainer='Osman Tursun',
