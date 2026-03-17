@@ -29,7 +29,7 @@ import argparse
 
 
 class UgMultiScriptConverter:
-    def __init__(self, source_script, target_script, less_apostrophe=False):
+    def __init__(self, source_script, target_script, less_apostrophe=False):  # less_apostrophe is not yet implemented
         self.source_script = source_script
         self.target_script = target_script
         # self.less_apostrophe = less_apostrophe
@@ -78,6 +78,7 @@ class UgMultiScriptConverter:
             raise ValueError(
                 f'Conversion from {self.source_script} to {self.target_script} not supported')
 
+    @staticmethod
     def isPureUyghurScript(herp):
         m = re.search('[\u0621-\u06ff]', herp)
         if m == None:
@@ -85,7 +86,7 @@ class UgMultiScriptConverter:
         else:
             return True
 
-    def _repalce_via_table(self, text, tab1, tab2):
+    def _replace_via_table(self, text, tab1, tab2):
         for i, j in zip(tab1, tab2):
             text = text.replace(i, j)
         return text
@@ -103,7 +104,7 @@ class UgMultiScriptConverter:
         -------
         text
         """
-        text = self._repalce_via_table(
+        text = self._replace_via_table(
             text, self.__uas_group1, self.__cts_group1)
         text = self.__revise_CTS(text, keep_apstrophe)
         return text
@@ -133,43 +134,15 @@ class UgMultiScriptConverter:
 
     def ULS2CTS(self, text):
         text = text.lower()
-        # ch ç # zh j # sh ş # gh ğ
-        text = text.replace(u"j", u'c') \
-            .replace(u"ng", u'ñ') \
-            .replace(u"n'g", u'ng') \
-            .replace(u"'ng", u'ñ') \
-            .replace(u'ch', u'ç') \
-            .replace(u'zh', u'j') \
-            .replace(u'sh', u'ş') \
-            .replace(u"'gh", u'ğ') \
-            .replace(u"gh", u'ğ') \
-            .replace(u"w", u'v') \
-            .replace(u'ch', u'ç')
-        return text
+        return self._uls_to_cts_chain(text)
 
     def UYS2CTS(self, text):
         text = text.lower()
-        # e:ə c:j ç:q x:h j:ⱬ ş:x ñ:ng ö:ø ü:ü  v:w é:e
-        # q:ⱪ ğ:ƣ
-        text = text.replace(u"e", u'é') \
-            .replace(u"ə", u'e') \
-            .replace(u"j", u'c') \
-            .replace(u"q", u'ç') \
-            .replace(u"ⱬ", u'j') \
-            .replace(u"x", u'ş') \
-            .replace(u"h", u'x') \
-            .replace(u"ⱨ", u'h') \
-            .replace(u"ng", u'ñ') \
-            .replace(u"ø", u'ö') \
-            .replace(u"ü", u'ü') \
-            .replace(u"w", u'v') \
-            .replace(u"ⱪ", u'q') \
-            .replace(u"ƣ", u'ğ')
-        return text
+        return self._uys_to_cts_chain(text)
 
     def UCS2CTS(self, text):
         text = text.lower()
-        text = self._repalce_via_table(
+        text = self._replace_via_table(
             text, self.__ucs_group1, self.__cts_group1)
         text = text.replace("я", "ya").replace("ю", "yu")
         return text
@@ -245,7 +218,7 @@ class UgMultiScriptConverter:
         # for example
         # "ait" -> "U+0626aU+0626it" ئائىت
         # cuñxua -> cuñxua. cuñxu'a is wrong جۇڭخۇا
-        text = self._repalce_via_table(
+        text = self._replace_via_table(
             text, self.__cts_group1, self.__uas_group1)
         # replace "'\u0626" with ""
         text = text.replace(u"'", '')
@@ -255,14 +228,40 @@ class UgMultiScriptConverter:
     def _revise_UAS(self, text):
         return re.sub(r"(^|-|\s|[اەېىوۇۆۈ])([اەېىوۇۆۈ])", lambda m: m.group(1) + "ئ" + m.group(2), text)
 
-    def CTS2ULS(self, text):
-        text = text.lower()
-        text = text.replace(u'ng', u"n'g") \
+    def _uls_to_cts_chain(self, text):
+        return text.replace(u"j", u'c') \
+            .replace(u"ng", u'ñ') \
+            .replace(u"n'g", u'ng') \
+            .replace(u"'ng", u'ñ') \
+            .replace(u'ch', u'ç') \
+            .replace(u'zh', u'j') \
+            .replace(u'sh', u'ş') \
+            .replace(u"'gh", u'ğ') \
+            .replace(u"gh", u'ğ') \
+            .replace(u"w", u'v')
+
+    def _uys_to_cts_chain(self, text):
+        return text.replace(u"e", u'é') \
+            .replace(u"ə", u'e') \
+            .replace(u"j", u'c') \
+            .replace(u"q", u'ç') \
+            .replace(u"ⱬ", u'j') \
+            .replace(u"x", u'ş') \
+            .replace(u"h", u'x') \
+            .replace(u"ⱨ", u'h') \
+            .replace(u"ng", u'ñ') \
+            .replace(u"ø", u'ö') \
+            .replace(u"ü", u'ü') \
+            .replace(u"w", u'v') \
+            .replace(u"ⱪ", u'q') \
+            .replace(u"ƣ", u'ğ')
+
+    def _cts_to_uls_chain(self, text):
+        return text.replace(u'ng', u"n'g") \
             .replace(u'sh', u"s'h") \
             .replace(u'ch', u"c'h") \
             .replace(u'zh', u"z'h") \
             .replace(u'gh', u"g'h") \
-            .replace(u'ng', u"n'g") \
             .replace(u'nğ', u"n'gh") \
             .replace(u'ñ', u"ng") \
             .replace(u'j', u'zh') \
@@ -271,11 +270,9 @@ class UgMultiScriptConverter:
             .replace(u'ş', u'sh') \
             .replace(u"ğ", u"gh") \
             .replace(u"v", u'w')
-        return text
 
-    def CTS2UYS(self, text):
-        text = text.lower()
-        text = text.replace(u'ng', u"n'g") \
+    def _cts_to_uys_chain(self, text):
+        return text.replace(u'ng', u"n'g") \
             .replace(u"e", u'ə') \
             .replace(u'j', u"ⱬ") \
             .replace(u'c', u"j") \
@@ -289,17 +286,24 @@ class UgMultiScriptConverter:
             .replace(u'v', u"w") \
             .replace(u'é', u"e") \
             .replace(u'ğ', u"ƣ")
-        return text
+
+    def CTS2ULS(self, text):
+        text = text.lower()
+        return self._cts_to_uls_chain(text)
+
+    def CTS2UYS(self, text):
+        text = text.lower()
+        return self._cts_to_uys_chain(text)
 
     def CTS2IPA(self, text):
-        position = self.__ipa_group1.index('y')
-        self.__cts_group1 = self.__cts_group1[:position] + \
-            self.__cts_group1[position+1:]
-        self.__ipa_group1 = self.__ipa_group1[:position] + \
-            self.__ipa_group1[position + 1:]
+        cts_group = list(self.__cts_group1)
+        ipa_group = list(self.__ipa_group1)
+        position = ipa_group.index('y')
+        cts_group = cts_group[:position] + cts_group[position+1:]
+        ipa_group = ipa_group[:position] + ipa_group[position+1:]
 
-        text = self._repalce_via_table(
-            text, self.__cts_group1, self.__ipa_group1)
+        text = self._replace_via_table(
+            text, cts_group, ipa_group)
         text = text.replace('ü', 'y')
         return text
 
@@ -341,7 +345,7 @@ class UgMultiScriptConverter:
     def CTS2UCS(self, text):
         text = text.lower()
         text = text.replace("ya", "я").replace("yu", "ю")
-        text = self._repalce_via_table(
+        text = self._replace_via_table(
             text, self.__cts_group1, self.__ucs_group1)
         # return text.replace("'", "")
         return text
@@ -349,55 +353,136 @@ class UgMultiScriptConverter:
     # ----------------------------------------------
     # Uyghur Latin script to target script
     def ULS2UAS(self, text):
-        return self.CTS2UAS(self.ULS2CTS(text))
+        # two-step: return self.CTS2UAS(self.ULS2CTS(text))
+        text = text.lower()
+        text = self._uls_to_cts_chain(text)
+        text = re.sub(r'(?<=[^bptcçxdrzjsşfñlmhvyqkgnğ]|^)[aeéiouöü]',
+                      lambda m: u'\u0626' + m.group(), text)
+        text = self._replace_via_table(text, self.__cts_group1, self.__uas_group1)
+        text = text.replace(u"'", '')
+        text = self._revise_UAS(text)
+        return text
 
     def ULS2UCS(self, text):
-        return self.CTS2UCS(self.ULS2CTS(text))
+        # two-step: return self.CTS2UCS(self.ULS2CTS(text))
+        text = text.lower()
+        text = self._uls_to_cts_chain(text)
+        text = text.replace("ya", "я").replace("yu", "ю")
+        text = self._replace_via_table(text, self.__cts_group1, self.__ucs_group1)
+        return text
 
     def ULS2UYS(self, text):
-        return self.CTS2UYS(self.ULS2CTS(text))
+        # two-step: return self.CTS2UYS(self.ULS2CTS(text))
+        text = text.lower()
+        text = self._uls_to_cts_chain(text)
+        text = self._cts_to_uys_chain(text)
+        return text
 
     # ----------------------------------------------
     # Uyghur Arabic script to target script
 
     def UAS2ULS(self, text):
-        return self.CTS2ULS(self.UAS2CTS(text, True))
+        # two-step: return self.CTS2ULS(self.UAS2CTS(text, True))
+        text = self._replace_via_table(text, self.__uas_group1, self.__cts_group1)
+        text = self.__revise_CTS(text, True)
+        text = text.lower()
+        text = self._cts_to_uls_chain(text)
+        return text
 
     def UAS2UCS(self, text):
-        return self.CTS2UCS(self.UAS2CTS(text, True))
+        # two-step: return self.CTS2UCS(self.UAS2CTS(text, True))
+        text = self._replace_via_table(text, self.__uas_group1, self.__cts_group1)
+        text = self.__revise_CTS(text, True)
+        text = text.lower()
+        text = text.replace("ya", "я").replace("yu", "ю")
+        text = self._replace_via_table(text, self.__cts_group1, self.__ucs_group1)
+        return text
 
     def UAS2UYS(self, text):
-        return self.CTS2UYS(self.UAS2CTS(text, True))
+        # two-step: return self.CTS2UYS(self.UAS2CTS(text, True))
+        text = self._replace_via_table(text, self.__uas_group1, self.__cts_group1)
+        text = self.__revise_CTS(text, True)
+        text = text.lower()
+        text = self._cts_to_uys_chain(text)
+        return text
 
     # ----------------------------------------------
     # Uyghur Cyrillic script to target script
 
     def UCS2UAS(self, text):
-        return self.CTS2UAS(self.UCS2CTS(text))
+        # two-step: return self.CTS2UAS(self.UCS2CTS(text))
+        text = text.lower()
+        text = self._replace_via_table(text, self.__ucs_group1, self.__cts_group1)
+        text = text.replace("я", "ya").replace("ю", "yu")
+        text = re.sub(r'(?<=[^bptcçxdrzjsşfñlmhvyqkgnğ]|^)[aeéiouöü]',
+                      lambda m: u'\u0626' + m.group(), text)
+        text = self._replace_via_table(text, self.__cts_group1, self.__uas_group1)
+        text = text.replace(u"'", '')
+        text = self._revise_UAS(text)
+        return text
 
     def UCS2ULS(self, text):
-        return self.CTS2ULS(self.UCS2CTS(text))
-
-    def UCS2ULS(self, text):
-        return self.CTS2ULS(self.UCS2CTS(text))
+        # two-step: return self.CTS2ULS(self.UCS2CTS(text))
+        text = text.lower()
+        text = self._replace_via_table(text, self.__ucs_group1, self.__cts_group1)
+        text = text.replace("я", "ya").replace("ю", "yu")
+        text = self._cts_to_uls_chain(text)
+        return text
 
     def UCS2UYS(self, text):
-        return self.CTS2UYS(self.UCS2CTS(text))
+        # two-step: return self.CTS2UYS(self.UCS2CTS(text))
+        text = text.lower()
+        text = self._replace_via_table(text, self.__ucs_group1, self.__cts_group1)
+        text = text.replace("я", "ya").replace("ю", "yu")
+        text = self._cts_to_uys_chain(text)
+        return text
 
     # ----------------------------------------------
     # Uyghur Yengi script to target script
 
     def UYS2UAS(self, text):
-        return self.CTS2UAS(self.UYS2CTS(text))
+        # two-step: return self.CTS2UAS(self.UYS2CTS(text))
+        text = text.lower()
+        text = self._uys_to_cts_chain(text)
+        text = re.sub(r'(?<=[^bptcçxdrzjsşfñlmhvyqkgnğ]|^)[aeéiouöü]',
+                      lambda m: u'\u0626' + m.group(), text)
+        text = self._replace_via_table(text, self.__cts_group1, self.__uas_group1)
+        text = text.replace(u"'", '')
+        text = self._revise_UAS(text)
+        return text
 
     def UYS2ULS(self, text):
-        return self.CTS2ULS(self.UYS2CTS(text))
+        # two-step: return self.CTS2ULS(self.UYS2CTS(text))
+        text = text.lower()
+        text = self._uys_to_cts_chain(text)
+        text = self._cts_to_uls_chain(text)
+        return text
 
     def UYS2UCS(self, text):
-        return self.CTS2UCS(self.UYS2CTS(text))
+        # two-step: return self.CTS2UCS(self.UYS2CTS(text))
+        text = text.lower()
+        text = self._uys_to_cts_chain(text)
+        text = text.replace("ya", "я").replace("yu", "ю")
+        text = self._replace_via_table(text, self.__cts_group1, self.__ucs_group1)
+        return text
 
-    def UAStoUZLS(self, text):
-        return self.CTS2UZLS(self.UAS2CTS(text, True))
+    def UAS2UZLS(self, text):
+        # two-step: return self.CTS2UZLS(self.UAS2CTS(text, True))
+        text = self._replace_via_table(text, self.__uas_group1, self.__cts_group1)
+        text = self.__revise_CTS(text, True)
+        text = text.lower()
+        text = text.replace(u"a", u'o') \
+            .replace(u"e", u'a') \
+            .replace(u'c', u"j") \
+            .replace(u'q', u"q") \
+            .replace(u'ç', u"ch") \
+            .replace(u'ş', u"sh") \
+            .replace(u'ñ', u"ng") \
+            .replace(u'ö', u"o'") \
+            .replace(u'ü', u"u'") \
+            .replace(u'é', u"e") \
+            .replace(u'ğ', u"g'")
+        return text
 
 
 def args_parser():
@@ -407,14 +492,14 @@ def args_parser():
     parser.add_argument('-t', '--target', help='target script', required=True)
     parser.add_argument('-i', '--input', help='input file', required=True)
     parser.add_argument('-o', '--output', help='output file', required=True)
-    # parser.add_argument('--la', action='store_true', default=False, help='Removing apostrophe between vowels', required=False)
+    parser.add_argument('--la', action='store_true', default=False, help='Removing apostrophe between vowels', required=False)
     args = parser.parse_args()
     return args
 
 
 if __name__ == "__main__":
     args = args_parser()
-    print(args.less_apostrophe)
+    print(args.la)
     with open(args.input, 'r') as f:
         text = f.read()
 
