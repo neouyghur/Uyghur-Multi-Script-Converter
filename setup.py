@@ -2,11 +2,11 @@ from setuptools import setup, find_packages
 
 setup(
     name='umsc',
-    version='0.4.0',
+    version='0.5.0',
     author='Osman Tursun',
     author_email='osmanjan.t@gmail.com',
     maintainer='Osman Tursun',
-    maintainer_email='mpcabd@gmail.com',
+    maintainer_email='osmanjan.t@gmail.com',
     description='Script Converter for Uyghur Language',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
